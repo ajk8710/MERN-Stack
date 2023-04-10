@@ -1,7 +1,18 @@
 
+// JavaScript is functional programming language - it's behaviour oriented
+// It is compiled (compiles funtions) and then intepreted
 
-function Rectangle(length, breadth) {
-    return length*breadth;
+// console.log(pi); - unidentified
+console.log(Rectangle(5,6)); // this works
+
+function Rectangle(length, width) {
+    return length * width;
 }
 
-console.log(Rectangle(1,2));
+var pi = 3.14; // variable declaration
+
+function Circle(radius) {
+    return pi * radius * radius;
+}
+
+console.log(Circle(5));
