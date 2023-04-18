@@ -1,5 +1,5 @@
 
-// JavaScript is functional programming language - it's behaviour oriented
+// JavaScript is function oriented programming language - it's behaviour oriented
 // It is compiled (compiles funtions) and then intepreted
 
 // console.log(pi); - unidentified
