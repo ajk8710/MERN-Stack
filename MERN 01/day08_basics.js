@@ -51,12 +51,12 @@ console.log(myObj.getDetails());
 
 // new Object(object) copies the reference, pointing to same object
 var shallowCopy = new Object(myObj);
-shallowCopy.name = "New King"
+shallowCopy.name = "New King";
 console.log(myObj); // new king
 
 // Object.create() method creates a clone of object, not pointing to same object
 var deepCopy = Object.create(myObj);
-deepCopy.name = "Old King"
+deepCopy.name = "Old King";
 console.log(myObj); // new king
 
 // Object.assign(target, sources) method copies properties from sources to target
@@ -66,7 +66,7 @@ console.log(myObj); // old king
 
 // Function.call(this, args…) method calls a function with a given this value (object) and then arguments.
 // Function.apply(this, args[]) method takes array of arguments.
-myObj.name = "Brand New King"
+myObj.name = "Brand New King";
 
 function callAndApply(param1, param2) {return this.name + param1 + param2};
 
