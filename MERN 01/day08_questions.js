@@ -75,7 +75,12 @@ console.log("add(\"first\", 2, \"three\") " + add("first", 2, "three"));
 
 
 //Q5. A detailed example implementation of event loop using multiple settimeouts
-setTimeout(function delayMe() {console.log("Delay Me")}, 1000);
+setTimeout(function() {
+    console.log("1st")  // pushed first, done after 1s.
+    setTimeout(function() {console.log("3rd")}, 0);  // pushed fourth, but done after 1s.
+}, 1000);
+setTimeout(function () {console.log("2nd")}, 1000);   // pushed second, done after 1s.
+setTimeout(function () {console.log("4th")}, 2000);   // pushed third, but done after 2s.
 
 
 //Q6. Print the topics you remember so far exporting it from one file an printing in another
