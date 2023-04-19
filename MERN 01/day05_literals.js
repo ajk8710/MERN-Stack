@@ -16,7 +16,7 @@ var lastName2 = "Last Name";
 var firstName3 = "First Name";
 var lastName3 = "Last Name";
 
-//object literals
+// object literals
 var User = { firstName : "First Name for User", lastName : "Last Name" }
 
 var User2 = { firstName : "First Name for User 2", lastName : "Last Name" }
