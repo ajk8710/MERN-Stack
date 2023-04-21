@@ -17,4 +17,4 @@ Random string that i wanted to type here for template literals
 Random string that i wanted to type here for template literals 
                                 Random string that i wanted to type here for template literals 
                                 <div><b>Some Values</b></div>
-           ${JSON.stringify(animalSoundsES6)}                     `)
+           ${JSON.stringify(animalSoundsES6)}                     `);
