@@ -106,11 +106,12 @@ for (var index = 0; index < 5; index++) {
 // Prints five 5s or 0-1-2-3-4 at once
 
 
-// 
+// let is block scope and value of let is passed in as block is cretaed.
+// var is function scope, only reference of var is passed in. Value is refered when function executes.
 for (let indexLet = 0; indexLet < 5; indexLet++) {
     setTimeout(function () {
         console.log("Index Value - " + indexLet)
-    }, 1000);    
+    }, 1000);
 }
 
 // console.log(indexLet);  // not accessible outside block
