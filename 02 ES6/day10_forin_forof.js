@@ -3,6 +3,7 @@
 // for in loop - iterates over keys/properties of object, basically meant for json objects with key values
 
 // for in loop iterates over the keys on object (just like in Python for-in-loop over dictionary)
+//                                              (but you can't use for in to iterate keys on dic, use for obj)
 let user = {name : "King", age : 21, session : "MERNStack"};
 
 for (const key in user) {

@@ -74,7 +74,6 @@ let student = {
 }
 
 // get studentname marks.math, marks.pysics, marks.chemistry(if not exsit, 92) from student
-//let {studentname, marks:{ math, physics, chemistry=92} } = student;
 let {studentname, marks:{ math, physics, chemistry=92} } = student;
 
 console.log(studentname);
