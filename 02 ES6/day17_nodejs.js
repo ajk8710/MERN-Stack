@@ -33,7 +33,7 @@
 // Representational information, html5 => hyper text markup language
 
 // For example, if I go to one page of Amazon, then move onto the next - it loses previous state
-// Everything is rendered again when you click the back.
+// Everything is fetched and rendered again when you click the back.
 // Each page is a representaion / a view
 
 // One api should do one job well
