@@ -1,5 +1,6 @@
 // NODE - is a framework to run js on server, also is able to provide everything that 
 // we need to build an entertprse level application
+// (not only framework, NODE is runtime environment that let Javascript run outside of browser)
 // I/O - operations
 // db connections
 // file manipulations
