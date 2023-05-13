@@ -12,13 +12,13 @@ import Application from "./app/ApplicationComponent";  // default export/imports
 // creating root to hold and load react application
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-// const app2 = <h1> hello app 2 </h1>
-// const app3 = () => {return <div> hello app 3 </div>}
+// const App2 = <h1> hello app 2 </h1>  // this is not a component, but just a reference to html
+// const App3 = () => {return <h1> hello app 3 </h1>}  // component names should start capital or it's considered html tags
 
 // bootstrapping of single page application - inject application into root
-root.render(
+root.render (
     <Application/>
-    // app2
-    // app3
-    // <app3/>
+    // App2
+    // <h1> hello app 22 </h1>  // - this is what App2 is
+    // <App3/>  // <app3/> - lower case would not work
 )
