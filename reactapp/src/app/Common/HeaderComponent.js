@@ -8,7 +8,7 @@ let Header = ({age}) => {
 
     let goToAboutClick = (evt)=>{
         goAboutHook("/about/2023");
-        evt.preventDefault();
+        evt.preventDefault();  // prevents html default behavior - Event invoked in child propagating to parent
     }
 
     return (
