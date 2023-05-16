@@ -9,7 +9,7 @@ webpackConfig = {
     // webpack 5 comes with devServer which loads in development mode
     devServer: {
         port: 9092,  // which port will host devServer
-        historyApiFallback : true //localhost:9092/user
+        historyApiFallback : true  // html5 api. this is like * page in express - whenever request comes, just return index.html.  //localhost:9092/user
     },
     // Rules of how webpack will take our files, complie & bundle them for the browser 
     module: {

@@ -3,13 +3,24 @@ import React, {Component} from "react";
 let Footer = (props) => {  // onwer of props is parent. props is read only.
     return (
         <>
-            <h1>This is Footer Component</h1>
+            <div className="footer">
+                © Copyright 2023 All rights reserved. &nbsp;|&nbsp; <a href="https://www.synergisticit.com/" target="_blank">SynergisticIT</a> &nbsp;|&nbsp; <a href="http://www.synergisticit.com/sitemap.xml" target="_blank">Sitemap</a>
+            </div>
+        </>
+    )
+}
+
+export let Footer1 = (props) => {
+    return (
+        <>
+            <h1>This is Footer1 Component</h1>
             <b>Passed from App to Footer: {props.age}</b>
-            <h3>More in Footer Below</h3>
+            <h3>More in Footer1 Below</h3>
             {props.children[0]}
             {props.children[1]}
         </>
     )
+
 }
 
 export let Footer2 = (props) => {

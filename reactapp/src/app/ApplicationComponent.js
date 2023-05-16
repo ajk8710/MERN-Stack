@@ -1,8 +1,14 @@
 import React, {Component} from "react";
+import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import "./app.css";
+
+
 import Home from "./Common/HomeComponent";
 import Header from "./Common/HeaderComponent";
-import Footer, {Footer2, Footer3} from "./Common/FooterComponent";
+import Footer, {Footer1, Footer2, Footer3} from "./Common/FooterComponent";
 import Child2 from "./Common/ChildComponent2";
+import About from "./Common/AboutComponent";
+import NotFound from "./Common/NotFoundPage";
 
 // class based component - any component's first letter should be capital
 export default class Application extends Component {
@@ -15,17 +21,26 @@ export default class Application extends Component {
     // (Class itself in general doesn't return anything, unless it has a method that returns something.)
     render() {
         return (
-            <>
+            <Router>
                 <Header age={this.User.Age}/>
-                <h2>Application Class Component</h2>
-                <Home user={this.User}/>
-                <Footer age={this.User.Age}>
+                
+                <Routes>
+                    <Route path="/" element={<Navigate replace to={"/user"}/>}/>
+                    <Route path="/home" element={<Home user={this.User}/>}/>
+                    <Route path="/about" element={<About/>}/>
+                    <Route path="/about/:id" element={<About/>}/>
+                    <Route path="*" element={<NotFound/>}/>
+                </Routes>
+                
+                <Footer age={this.User.Age}/>
+                
+                {/*<Footer1 age={this.User.Age}>
                     <Child2/>
                     <input type="text" value={"input element"}></input>
-                </Footer>
+                </Footer1>
                 <Footer2 name={this.User.Name}/>
-                <Footer3 age={this.User.Age}/>
-            </>
+                <Footer3 age={this.User.Age}/>*/}
+            </Router>
         )
     }
 }
