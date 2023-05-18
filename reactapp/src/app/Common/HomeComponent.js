@@ -14,10 +14,7 @@ export default class Home extends PureComponent {
         this.state = {
             UserName : props.user.Name,
             UserAge : props.user.Age,
-            Timer : 1,
-            ChildInfo : "state.ChildInfo at parent Home",
-            Address : "Address from Home Comp",
-            Session : "Session from Home Comp"
+            Timer : 1
         }
 
         this.incrementTimer();
