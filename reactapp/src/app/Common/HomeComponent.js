@@ -1,4 +1,4 @@
-import React, {Component, PureComponent} from "react";
+import React, {Component, PureComponent, Ref} from "react";
 import Child from "./ChildComponent";
 
 // export default class Home extends Component {
@@ -14,10 +14,18 @@ export default class Home extends PureComponent {
         this.state = {
             UserName : props.user.Name,
             UserAge : props.user.Age,
-            Timer : 1
+            Timer : 1,
+            ChildInfo : "state.ChildInfo at parent Home",
+            Address : "Address from Home Comp",
+            Session : "Session from Home Comp"
         }
 
         this.incrementTimer();
+
+        // Although it is recommended to not directly access the DOM (html) but,
+        // by using ref htmls, we can access and manipulate html directly
+        this.RefAddress = React.createRef();  // reference that can be used to link html in react
+        this.RefSession = React.createRef();
     }
 
     // state is mutable. Upon change of state a new virtual dom gets created which will be rended on browser
@@ -61,6 +69,24 @@ export default class Home extends PureComponent {
             evt.preventDefault();
     }
 
+    getChildData = (childinfo) => {
+        alert("Child Info: " + childinfo);
+        this.setState( {ChildInfo : childinfo} );
+    }
+    
+    //supporting uncontrolled component rendering
+    formSubmit = (evt)=>{
+        let address = this.RefAddress.current.value;
+        let session = this.RefSession.current.value
+
+        this.setState({
+            Address : address,
+            Session : session
+        })
+
+        evt.preventDefault();
+    }
+
     // Creation Life Cycle Methods
     // 1. Constructor - Here we feeds data, set the basic info
     //     In constructor, UI/HTML is not ready (render method not called yet).
@@ -69,6 +95,11 @@ export default class Home extends PureComponent {
     // 3. componentDidMount
     componentDidMount() {  // view or ui is ready, and we can access HTML if required, and do state changes here
         console.log("Component did mount");
+
+        setTimeout(() => {
+            this.RefAddress.current.focus()
+            this.RefAddress.current.value = "Address changed"    
+        }, 3000);
     }
 
     // Update Life Cycle Methods
@@ -85,7 +116,6 @@ export default class Home extends PureComponent {
     //     }
     // }
 
-
     // Destruction Life Cycle Method
     // Clear all subscriptions of API or calls like setInterval
     // componentWillUnmount is the only destruction life cycle method
@@ -100,14 +130,35 @@ export default class Home extends PureComponent {
             <>
                 <h1><b>This is Home Component</b></h1>
                 <h4>Props Values Passed from App to Home: {this.User.Age} {this.User.Name}</h4>
-                <h1>{"Timer " + this.state.Timer}</h1>
+                <h3>{"Timer " + this.state.Timer}</h3>
                 <div>
                     <b>Home's State: {this.state.UserName} {this.state.UserAge}</b>
                     <input type="button" onClick={this.incrementAge} value={"Increment Age"}></input>
                 </div>
                 <input type="text" value={this.state.UserName} placeholder="Please type your name"
                  onChange={this.updateNameHandler}></input>
-                <Child user={this.User} desc={"GrandChild"}/>
+                <h3>{this.state.ChildInfo}</h3>
+                <hr/>
+                    <Child user={this.User} desc={"GrandChild"} 
+                    childEvent={this.getChildData}/>
+                <hr/>
+                 {/* uncontrolled component */}
+                 <form action="localhost:9000/api/user/save" onSubmit={this.formSubmit}>
+                    <label>
+                        Address:
+                    <input type={"text"} ref={this.RefAddress} className={"address"} id={"address"} 
+                            placeholder="Please add user address" maxLength={25}></input>
+                    </label>
+
+                    <label>
+                        Session:
+                    <input type={"text"} ref={this.RefSession} placeholder="Please add session details" maxLength={25}></input>
+                    </label>
+
+                    <input type="submit" value="Submit" />
+                </form>
+                <h3>{this.state.Address}</h3>
+                <h3>{this.state.Session}</h3>
             </>
         )
     }
