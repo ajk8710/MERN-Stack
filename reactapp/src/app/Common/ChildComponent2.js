@@ -16,19 +16,19 @@ export default Child2;
 
 // As class component inherits from base class, so it can implement Component Life Cycle Methods
 
-// creation life cycle
+// Creation Life Cycle
 // 1. Constructor - feed data through (props)
 // 2. render - component gets rendered - prepared with html and data
 // 3. componentDidMount - finally all initializations are done and component is ready to access
 
-// update life cycle
+// Update Life Cycle
 // shouldComponentUpdate
 // getSanpshotBeforeUpdate
 // componentWillUpdate
 // render
 // componentDidUpdated
 
-// destruction life cycle
+// Destruction Life Cycle
 // componentWillUnmount
 
 

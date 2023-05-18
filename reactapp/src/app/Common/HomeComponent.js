@@ -1,7 +1,11 @@
-import React, {Component} from "react";
+import React, {Component, PureComponent} from "react";
 import Child from "./ChildComponent";
 
-export default class Home extends Component {
+// export default class Home extends Component {
+
+// PureComponent compares all the states and props before calling render method so shouldComponentUpdate is not required
+// If there are so many states and props, PureComponent compares each - heavy overhead if actually only dependent on few of them
+export default class Home extends PureComponent {
     constructor(props) {
         super(props);
         this.User = props.user;
@@ -9,8 +13,11 @@ export default class Home extends Component {
         // we can write state object to create new virtual dom
         this.state = {
             UserName : props.user.Name,
-            UserAge : props.user.Age
+            UserAge : props.user.Age,
+            Timer : 1
         }
+
+        this.incrementTimer();
     }
 
     // state is mutable. Upon change of state a new virtual dom gets created which will be rended on browser
@@ -31,7 +38,18 @@ export default class Home extends Component {
         // when state changes, render method is called, creates new v-dom,
         // compare difference with previous v-dom, only the differences are rendered
 
-        this.setState( {UserAge : this.state.UserAge + 1} );
+        this.setState( {UserAge : this.state.UserAge + 1, 
+            // UserName : "Raichu"
+        } );
+        // forceUpdate, unlike setState, skips all life cycle method and just render (creates virtual dom)
+        // this.forceUpdate();
+    }
+
+    incrementTimer = () => {
+        // this.interval = setInterval( () => {  // this on this.interval makes it global variable
+        //     this.setState( {Timer : this.state.Timer + 1} );
+        //     console.log(this.state.Timer);
+        // }, 1000)
     }
 
     // event binding in textbox, two way data binding in react
@@ -43,12 +61,46 @@ export default class Home extends Component {
             evt.preventDefault();
     }
 
+    // Creation Life Cycle Methods
+    // 1. Constructor - Here we feeds data, set the basic info
+    //     In constructor, UI/HTML is not ready (render method not called yet).
+    //     We should not access UI/HTML, nor state changes, nor server call. (it may impact rendering process)
+    // 2. render method
+    // 3. componentDidMount
+    componentDidMount() {  // view or ui is ready, and we can access HTML if required, and do state changes here
+        console.log("Component did mount");
+    }
+
+    // Update Life Cycle Methods
+    // shouldComponentUpdate - called whenever there is state change
+    // But forceUpdate() will skip all life cycle method and just render
+    // shouldComponentUpdate(nextProps, nextState) {  // after state change, do you really want to render this
+    //     console.log("nextProps ", nextProps);
+    //     console.log("nextState ", nextState);
+    //     // return false; - state change will not go to render (will not go to UI). Usage ex: render as a batch
+    //     if (this.state.UserName === nextState.UserName) {
+    //         return false;  // render method not called
+    //     } else {
+    //         return true;  // render method called
+    //     }
+    // }
+
+
+    // Destruction Life Cycle Method
+    // Clear all subscriptions of API or calls like setInterval
+    // componentWillUnmount is the only destruction life cycle method
+    componentWillUnmount() {  // inherited from Component
+        console.log("Component will unmount");
+        clearInterval(this.interval);
+    }
+
     render() {
-        console.log("Home Component Rendered")
+        console.log("Home Component Rendered");
         return (
             <>
                 <h1><b>This is Home Component</b></h1>
                 <h4>Props Values Passed from App to Home: {this.User.Age} {this.User.Name}</h4>
+                <h1>{"Timer " + this.state.Timer}</h1>
                 <div>
                     <b>Home's State: {this.state.UserName} {this.state.UserAge}</b>
                     <input type="button" onClick={this.incrementAge} value={"Increment Age"}></input>
