@@ -1,4 +1,5 @@
 import React, {Component, PureComponent, Ref} from "react";
+import PropTypes from "prop-types";
 import Child from "./ChildComponent";
 
 // export default class Home extends Component {
@@ -9,6 +10,7 @@ export default class Home extends PureComponent {
     constructor(props) {
         super(props);
         this.User = props.user;
+        this.propTypeVal = props.propTypeVal;  // to demonstrate propTypes
 
         // we can write state object to create new virtual dom
         this.state = {
@@ -96,7 +98,7 @@ export default class Home extends PureComponent {
         console.log("Component did mount");
 
         setTimeout(() => {
-            this.RefAddress.current.focus()
+            this.RefAddress.current.focus()  // sets the focus to this textbox
             this.RefAddress.current.value = "Address changed"    
         }, 3000);
     }
@@ -158,8 +160,18 @@ export default class Home extends PureComponent {
                 </form>
                 <h3>{this.state.Address}</h3>
                 <h3>{this.state.Session}</h3>
+                <h3>{this.propTypeVal}</h3>
             </>
         )
     }
 
+}
+
+// default props is default parameter when parent component forgets to input paremeter
+// Home.defaultProps = {
+//     user : {Name: "Pikachu2", Age: 212} 
+// }
+
+Home.propTypes = {
+    propTypeVal : PropTypes.string.isRequired // console gives error if value is undefined
 }
