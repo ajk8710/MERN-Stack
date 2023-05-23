@@ -32,21 +32,23 @@ let Header = (props) => {
     )
 }
 
-// to make a component subscriber it implements - mapStateToProps
-// state that is present in store, map it as props
+// to make a component subscriber it implements - mapStateToProps - is the conventional name
+// - takes state as parameter and returns object
+// State that is present in store, map it as props
 let mapStateToProps = (state) => {
     return {
-        User : state.userReducer.User
+        User : state.userReducer.User  // mapped as props.User
         // Product : state.productReducer.ProductList
     }
 }
 
 // to make a component publisher it implements - mapDispatchToProps
+// - takes redux.dispatch method as parameter and returns object
 // let mapDispatchToProps = (dispatch)=>{
 //     return {
 //         User : state.userReducer.User
 //     }
 // }
 
-// mapDispatchToProps = null for now
+// mapDispatchToProps is null for now
 export default connect(mapStateToProps, null)(Header);
