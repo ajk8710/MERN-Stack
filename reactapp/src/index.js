@@ -9,7 +9,6 @@ import * as ReactDOM from "react-dom/client";
 
 import Application from "./app/ApplicationComponent";  // default export/imports doesn't need curly brackets
 
-
 import { Provider } from "react-redux"; // provider component wraps whole react app so it has store object
 import store from "./app/State/store";
 

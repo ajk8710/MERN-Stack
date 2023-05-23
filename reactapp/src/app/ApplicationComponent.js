@@ -2,13 +2,14 @@ import React, {Component} from "react";
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 import "./app.css";
 
-
 import Home from "./Common/HomeComponent";
 import Header from "./Common/HeaderComponent";
 import Footer, {Footer1, Footer2, Footer3} from "./Common/FooterComponent";
 import Child2 from "./Common/ChildComponent2";
 import About from "./Common/AboutComponent";
 import NotFound from "./Common/NotFoundPage";
+
+import User from "./ApplicationComponent/User/UserContainer";
 
 // class based component - any component's first letter should be capital
 export default class Application extends Component {
@@ -27,6 +28,7 @@ export default class Application extends Component {
                 <Routes>
                     <Route path="/" element={<Navigate replace to={"/user"}/>}/>
                     <Route path="/home" element={<Home user={this.User} propTypeVal={"proptypeval"}/>}/>
+                    <Route path="/user" element={<User/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/about/:id" element={<About/>}/>
                     <Route path="*" element={<NotFound/>}/>
