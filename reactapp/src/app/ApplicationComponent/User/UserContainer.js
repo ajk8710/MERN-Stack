@@ -20,10 +20,10 @@ let mapDispatchToProps = (dispatch) => {  // dispatch is used to take action fro
         addUser : (newuser) => {
             dispatch(AddUserToStoreAction(newuser))
         },
-        signInUpUser : (newuser) => {  //this.state - from UserComponent
+        signInUpUser : (newuser) => {  // this.state - from UserComponent
             dispatch(saveUserToDB(newuser))
         },
-        signInUpUser2 : (newuser) => {  //this.state - from UserComponent
+        signInUpUser2 : (newuser) => {  // this.state - from UserComponent
             dispatch(saveUser2ToDB(newuser))
         }
     }

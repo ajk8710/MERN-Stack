@@ -10,24 +10,25 @@ app.use(cors());  // adding cors as middleware to top level of API so that cors 
 // json middle-ware for setting request content type to json in req.body
 app.use(express.json({limit:'2mb', extended:false}));
 
-// console.log(__dirname);   // comeplete path to current directory
-// console.log(__filename);  // complete path to current file
 
-app.get('/', function(req, res) {
+// root path (/)
+// if someone gets to root path (/), send response 'Hello World from Express'
+app.get('/', function(req, res) {  // req and res are conventional naming
     res.send('Hello World from Express');  // send response to endpoint '/'
 });
 
+// if someone gets to user path (/user), send json response {name: "Jason"}
 app.get('/user', (req, res) => {  // send response to endpoint '/user'
-    // console.log(req.url);    // request that I'm sending to browser with GET method
-    // console.log(req.query);  // request that I'm sending to browser with GET method
+    // console.log("url:", req.url);  // /user - request that I'm sending to browser with GET method
+    // console.log("query:", req.query);  // {} - request that I'm sending to browser with GET method
     res.json({name: "Jason"});
 });
 
 app.get('/html', function(req, res) {
-    res.send("<h1>Application Running Through Nodemon</h1>");
+    res.send("<h1>Application Running Through Nodemon</h1>");  // html tag
 });
 
-// '*' to catch page not found error
+// '*' to catch page not found error - any undefined route routes to here
 // app.get('*', function (req, res) {
 //     res.send('API you"re looking for is still in progress...')
 // })
@@ -42,24 +43,30 @@ app.get('/getname', (req, res) => {
 // Day 20 Material - Query String, Route Param, Static Middleware and Routing
 
 // Two ways to send the information in get method - Query String and Route Param
-// Query String using '?'  Use '&' for more than one parameters
+
+// Query String using '?' in url.  Use '&' for more than one parameters
+// This is how to send request through url
 // http://localhost:9000/qstring?name=pikachu&age=25
 app.get('/qstring', (req, res) => {
     let qs = req.query['name'];  // req.query reads param passed in url
     if (qs) {
         res.send(qs + " " + req.query['age']);  // req.query reads param passed in url
     }
-    else {
+    else {  // name is undefined => false
+        // console.log(req.query);  // {} if http://localhost:9000/qstring
+        // console.log(req.query);  // {pika: ""} if http://localhost:9000/qstring?pika
         res.send("No query string passed");
     }
 });
 
-// Route Param using ':'
+// Route Param using ':' in the codes
+// This is how to send request through url - with '/'
 // http://localhost:9000/rparam/10001
 app.get('/rparam/:id', (req, res) => {
     let routeParam = req.params['id'];  // req.param reads param passed in url
     if (routeParam) {
         res.send(`ID in route is ${routeParam}`);
+        // console.log(req.params);  // can do like - /rparam/:id/:id2
     }
     else {
         res.send("No route param passed")
@@ -68,6 +75,9 @@ app.get('/rparam/:id', (req, res) => {
 
 
 // sedning static files using sendFile
+
+// console.log(__dirname);   // comeplete path to current directory
+// console.log(__filename);  // complete path to current file
 
 // .all accepts any method - GET, POST, PUT, PATCH, DELETE
 app.all('/info', (req, res) => {
@@ -96,18 +106,19 @@ app.use('/static', express.static('public'));  // for all url starting with /sta
 
 // create a sub application - mounting, path mount
 const admin = express();  // new admin application for admin requests
-const adminRouter = require("./routes/adminRoute");
-
 app.use('/admin', admin);  // for all url starting with /admin, sends it to admin app to handle
 
+// Then write endpoints for admin
 /*
 admin.get('/', (req, res)=>{  // http://localhost:9000/admin
     res.send("Hello Admin System");
 });
 */
 
+// Instead of defining endpoints on the same file here,
 // You can segregate functionality further by Router
-admin.use('/', adminRouter);  // for all url, sends it to adminRouter to handle
+const adminRouter = require("./routes/adminRoute");
+admin.use('/', adminRouter);  // all request comming to admin app, sends it to adminRouter to handle
 
 
 // Practice:
@@ -118,18 +129,18 @@ admin.use('/', adminRouter);  // for all url, sends it to adminRouter to handle
 app.use('/student', express.static('student'));
 
 const student = express();
-app.use('/studentinfo', student);
+app.use('/studentinfo', student);  // for all url starting with /studentinfo, use student app
 
 const studentRouter = require("./routes/studentRoute");
-student.use('/', studentRouter)
+student.use('/', studentRouter)  // student app's jobs are defined in studentRouter
 
 
 // userRouter
 const userApp = express();
 const userRouter = require("./routes/userRouter");
 
-app.use('/user', userApp);
-userApp.use('/', userRouter);  // localhost:9000/user/api/signinupuser
+app.use('/user', userApp);  // use userApp for all url with /user
+userApp.use('/', userRouter);  // its job is defined in userRouter // localhost:9000/user/api/signinupuser
 
 
 // user2Router

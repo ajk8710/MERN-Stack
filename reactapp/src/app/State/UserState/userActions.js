@@ -18,8 +18,8 @@ export const saveUserToDB = (newuser) => {
         axios.post("http://localhost:9000/user/api/signinupuser",  // url or end point of singninup api
                     newuser  // passing user object to be read as req.body
                 )
-                .then((ServerData) => {
-                    let signdUser = ServerData.data;
+                .then((ServerData) => {  // if resolved, data is saved to mongoose
+                    let signdUser = ServerData.data;  // data sent from userRouter as response
                     // alert(JSON.stringify(signdUser))
                     // sending user to the store
                     dispatch(AddUserToStoreAction(signdUser));  // dispatching action with signed user 
@@ -52,7 +52,7 @@ export const saveUser2ToDB = (newuser) => {
                     let signdUser = ServerData.data;
                     // alert(JSON.stringify(signdUser))
                     // sending user to the store
-                    dispatch(AddUser2ToStoreAction(signdUser));  // dispatching action with signed user 
+                    dispatch(AddUser2ToStoreAction(signdUser));
                     // dispatch(getUserCart(signdUser._id))
                 })
                 .catch((err)=>{
