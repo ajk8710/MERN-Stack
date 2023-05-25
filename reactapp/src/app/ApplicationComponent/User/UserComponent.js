@@ -58,6 +58,11 @@ export default class User extends Component{
         evt.preventDefault();
     }
 
+    loginUser2 = (evt) => {
+        this.props.signInUpUser2(this.state);
+        evt.preventDefault();
+    }
+
     render(){
         return(
             <>
@@ -89,10 +94,19 @@ export default class User extends Component{
                         onChange={this.onTextChange} />
                     </div>
 
+                    <div className="col-md-12">
                     <input type="button" className={"btn btn-primary col-md-2 saveUser"} 
-                            value={"SignIn-Up"} 
+                            value={"SignIn-Up User"} 
                             onClick={this.loginUser}/>
-                            </div>
+                    </div>
+
+                    <div className="col-md-12">
+                    <input type="button" className={"btn btn-primary col-md-2 saveUser"} 
+                            value={"SignIn-Up User 2"} 
+                            onClick={this.loginUser2}/>
+                    </div>
+                    </div>
+
                 </section>
             </>
         )

@@ -132,6 +132,13 @@ app.use('/user', userApp);
 userApp.use('/', userRouter);  // localhost:9000/user/api/signinupuser
 
 
+// user2Router
+const user2App = express();
+const user2Router = require("./routes/user2Router");
+
+app.use('/user', user2App);
+user2App.use('/', user2Router);  // localhost:9000/user/api/signinupuser2
+
 
 app.listen(9000);  // localhost:9000/
 

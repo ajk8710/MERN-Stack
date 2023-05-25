@@ -7,8 +7,11 @@ import { AddUserToStoreAction } from "../State/UserState/userActions";
 let Header = (props) => {
 
     let userName = props.User.userName;  // one way using connect & mapStateToProps, available as props
+    let user2Name = props.User2.userName;
     
     let password = useSelector((state) => state.userReducer.User.password);  // another way, mapping using useSelector hook
+    let password2 = useSelector((state) => state.userReducer.User2.password);
+    
     let dispatch = useDispatch();  // mapping using useDispatch hook, instead of mapDispatchToProps
     let testUseDispatch = () => {
         let testUser = {userName : "reset", password : "reset"};
@@ -24,9 +27,9 @@ let Header = (props) => {
 
     return (
         <>
-            Hi <b>{userName + ", "}</b> Welcome to Pokemon Center
+            Hi <b>{userName + ", "} & {user2Name + ", "}</b> Welcome to Pokemon Center
             {userName == "" ?<b> Please login to see more items</b>:""}
-            <div>Password is: {password} <button onClick={testUseDispatch}>reset</button></div>
+            <div>Password is: {password} & {password2} <button onClick={testUseDispatch}>reset</button></div>
             <div>
                 <NavLink to="/home" className="button" activeclassname="success" >Home </NavLink>
                 <NavLink to="/user" className="button" activeclassname="success" >User </NavLink>
@@ -44,7 +47,8 @@ let Header = (props) => {
 // State that is present in store, map it as props
 let mapStateToProps = (state) => {  // state is the store with all reducers
     return {
-        User : state.userReducer.User  // mapped as props.User
+        User : state.userReducer.User,  // mapped as props.User
+        User2 : state.userReducer.User2
         // Product : state.productReducer.ProductList
     }
 }

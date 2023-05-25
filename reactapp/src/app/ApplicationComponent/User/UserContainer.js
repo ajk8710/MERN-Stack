@@ -1,4 +1,4 @@
-import { AddUserToStoreAction, saveUserToDB } from "../../State/UserState/userActions";
+import { AddUserToStoreAction, saveUserToDB, saveUser2ToDB } from "../../State/UserState/userActions";
 import User from "./UserComponent";
 import { connect } from "react-redux";
 
@@ -22,6 +22,9 @@ let mapDispatchToProps = (dispatch) => {  // dispatch is used to take action fro
         },
         signInUpUser : (newuser) => {  //this.state - from UserComponent
             dispatch(saveUserToDB(newuser))
+        },
+        signInUpUser2 : (newuser) => {  //this.state - from UserComponent
+            dispatch(saveUser2ToDB(newuser))
         }
     }
 }
