@@ -1,5 +1,7 @@
 import * as actionTypes from "../actionTypes";
 
+// this initialState is not a store for states
+// this is just a definition of initial state
 const initialState = {
     User : {
         userName : "Pikachu",

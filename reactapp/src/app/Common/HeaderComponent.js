@@ -1,16 +1,22 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";  // hoooks for navigations
 
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { AddUserToStoreAction } from "../State/UserState/userActions";
 
 let Header = (props) => {
 
     let userName = props.User.userName;  // one way using connect & mapStateToProps, available as props
     
     let password = useSelector((state) => state.userReducer.User.password);  // another way, mapping using useSelector hook
+    let dispatch = useDispatch();  // mapping using useDispatch hook, instead of mapDispatchToProps
+    let testUseDispatch = () => {
+        let testUser = {userName : "reset", password : "reset"};
+        dispatch(AddUserToStoreAction(testUser));
+    }
     
     let goAboutHook = useNavigate();
-
+    
     let goToAboutClick = (evt)=>{
         goAboutHook("/about/2023");
         evt.preventDefault();  // prevents html default behavior - Event invoked in child propagating to parent
@@ -20,7 +26,7 @@ let Header = (props) => {
         <>
             Hi <b>{userName + ", "}</b> Welcome to Pokemon Center
             {userName == "" ?<b> Please login to see more items</b>:""}
-            <div>Password is: {password}</div>
+            <div>Password is: {password} <button onClick={testUseDispatch}>reset</button></div>
             <div>
                 <NavLink to="/home" className="button" activeclassname="success" >Home </NavLink>
                 <NavLink to="/user" className="button" activeclassname="success" >User </NavLink>

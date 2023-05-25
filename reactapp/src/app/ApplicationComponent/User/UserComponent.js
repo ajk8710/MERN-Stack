@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { useDispatch } from "react-redux";
 
 export default class User extends Component{
 
+    // mapping redux to props done in UserContainer through connect method
     constructor(props){
         super(props)
 
@@ -46,7 +48,13 @@ export default class User extends Component{
     // => userActions.AddUserToStoreAction(User) => userReducer
     // userReducer updates states, updated states propagated by mapStateToProps
     loginUser = (evt) => {
-        this.props.addUser(this.state);
+        // Using useDispatch hook - for functional component
+        // UserComponent is a class componenet, so won't work for now
+        // let dispatchSignInUser = useDispatch();
+        // dispatchSignInUser(AddUserToStoreAction(this.state));
+
+        //this.props.addUser(this.state);
+        this.props.signInUpUser(this.state);
         evt.preventDefault();
     }
 

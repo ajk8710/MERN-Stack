@@ -128,3 +128,6 @@ const numCakes = useSelector((state) => state.cakeReducer.numCakes);
 
 const dispatch = useDispatch();  // returns reference to redux.useDispatch()
 // Use EX: onClick={() => dispatch(buyCake())}
+// Use Ex2:
+//    buyingCake = () => { dispatch(buyCake()) } 
+      //   onClick={buyingCake}

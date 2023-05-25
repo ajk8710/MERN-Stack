@@ -20,7 +20,7 @@ import userReducer from "./UserState/userReducer";
 const logger = () => (next) => (action) => {
     // currying in javasript where we pass function as input and recieve function as output
     console.log("Logged Action : Store File ", action);
-    next(action);  // move to the actual execution
+    return next(action);  //move to the actual execution
 }
 
 const rootReducer = combineReducers({

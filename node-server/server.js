@@ -3,6 +3,13 @@
 const express = require('express');
 const app = express();  // app is an instance of an express application
 
+// To localhost:9000 and localhost:9092 can interchange data
+const cors = require('cors');  // importing for setting cross origin request headers to true
+app.use(cors());  // adding cors as middleware to top level of API so that cors is set to true on all endpoint
+
+// json middle-ware for setting request content type to json in req.body
+app.use(express.json({limit:'2mb', extended:false}));
+
 // console.log(__dirname);   // comeplete path to current directory
 // console.log(__filename);  // complete path to current file
 
@@ -115,6 +122,15 @@ app.use('/studentinfo', student);
 
 const studentRouter = require("./routes/studentRoute");
 student.use('/', studentRouter)
+
+
+// userRouter
+const userApp = express();
+const userRouter = require("./routes/userRouter");
+
+app.use('/user', userApp);
+userApp.use('/', userRouter);  // localhost:9000/user/api/signinupuser
+
 
 
 app.listen(9000);  // localhost:9000/
