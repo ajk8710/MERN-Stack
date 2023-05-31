@@ -15,12 +15,12 @@ export default class User extends Component{
         }
     }
 
-    onTextChange = (evt)=>{
+    onTextChange = (evt) => {
         let target = evt.target;
-        let classList = target.classList;  // reading the class name of html when change event happens (ex: "form-control col-md-6 username")
+        let classList = target.classList;  // reading the class name of html when change event happens (ex: className="form-control col-md-6 username")
         let value = target.value;  // value that user typed
 
-        if (classList.contains("username")){
+        if (classList.contains("username")) {
             this.setState({
                 userName : value
             })   
@@ -69,6 +69,7 @@ export default class User extends Component{
                 <h1>User Login Page</h1>
                 <section className={"componentClass"}>
                     <div className="form col-md-8">
+                    
                     <div className="col-md-12">
                         <b>User Name</b>
                         <input type="text" className="form-control col-md-6 username"
@@ -81,6 +82,7 @@ export default class User extends Component{
                         <input type="password" className="form-control col-md-6 pass" value={this.state.password} 
                             placeholder="Password" onChange={this.onTextChange} maxLength={40}/>
                     </div>
+
                     <div className="col-md-12">
                     <b>Street </b>
                         <input type="text" className="form-control col-md-6 street" value={this.state.street} 
@@ -105,8 +107,8 @@ export default class User extends Component{
                             value={"SignIn-Up User 2"} 
                             onClick={this.loginUser2}/>
                     </div>
-                    </div>
 
+                    </div>
                 </section>
             </>
         )

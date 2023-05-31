@@ -4,3 +4,5 @@
 export const AddUserToStore = "USER.ADDUSERTOSTORE"
 
 export const AddUser2ToStore = "USER.ADDUSER2TOSTORE"
+
+export const AddTrainerToStore = "TRAINER.ADDTRAINERTOSTORE"
