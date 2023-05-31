@@ -11,6 +11,7 @@ import NotFound from "./Common/NotFoundPage";
 
 import User from "./ApplicationComponent/User/UserContainer";
 import Trainer from "./ApplicationComponent/Custom/TrainerComponent";
+import TrainerContainer from "./ApplicationComponent/Custom/TrainerContainer";
 
 // class based component - any component's first letter should be capital
 export default class Application extends Component {
@@ -30,7 +31,7 @@ export default class Application extends Component {
                     <Route path="/" element={<Navigate replace to={"/user"}/>}/>
                     <Route path="/home" element={<Home user={this.User} propTypeVal={"proptypeval"}/>}/>
                     <Route path="/user" element={<User/>}/>
-                    <Route path="/trainer" element={<Trainer/>}/>
+                    <Route path="/trainer" element={<TrainerContainer/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/about/:id" element={<About/>}/>
                     <Route path="*" element={<NotFound/>}/>

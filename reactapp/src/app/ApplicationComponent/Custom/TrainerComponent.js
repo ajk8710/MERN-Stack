@@ -2,23 +2,26 @@ import React from "react";
 import { AddTrainerToStoreAction } from  "../../State/CustomState/trainerActions";
 import { connect, useSelector, useDispatch } from "react-redux";
 
-// mapStateToProps seems not working when I seperate to TrainerContainer. Can debug later.
+// mapStateToProps mapDispatchToProps seems not working when I seperate to TrainerContainer - Can debug later
+// Debugged - Routing should be from TrainerContainer, not Trainer - on ApplicationComponent
+// Container need to load first in order to initialize proper props values (mapStateToProps & mapDispatchToProps to load first)
+// If not, when Trainer is loaded, state is not mapped to props yet, and props.Trainer is undefined
 
 // takes state as parameter and returns object - props.Trainer : state.trainerReducer.Trainer
-let mapStateToProps = (state) => {
-    return {
-        Trainer : state.trainerReducer.Trainer,
-    }
-}
+// let mapStateToProps = (state) => {
+//     return {
+//         Trainer : state.trainerReducer.Trainer
+//     }
+// }
 
-// - takes redux.dispatch method as parameter and returns object - function name : calls reducer with action creator "AddTrainerToStoreAction"
-let mapDispatchToProps = (dispatch) => {
-    return {
-        addTrainer : (newTrainer) => {
-            dispatch(AddTrainerToStoreAction(newTrainer));
-        }
-    }
-}
+// // - takes redux.dispatch method as parameter and returns object - function name : calls reducer with action creator "AddTrainerToStoreAction"
+// let mapDispatchToProps = (dispatch) => {
+//     return {
+//         addTrainer : (newTrainer) => {
+//             dispatch(AddTrainerToStoreAction(newTrainer));
+//         }
+//     }
+// }
 
 let Trainer = (props) => {
     // let testUseSelector = useSelector((state) => state.trainerReducer.Trainer.name);
@@ -26,11 +29,10 @@ let Trainer = (props) => {
     // console.log("Test mapStateToProps:", props.Trainer.name);  // mapStateToProps working
 
     // Thoughts:
-    // try mapDispatch and useDispatch - figure out how to change the state in functional component
-    // setState was for state component - try similar way in class component still.  Also Try useState.
+    // try mapDispatch and useDispatch - figure out how to change the state in functional component - Done: using both MapDispatchToProps and UseDispatch
     // - onChange we did setState - why not do mapDispatch or useDispatch
 
-    // setState was for text change - can I do useDispatch for text change also?
+    // setState was for text change - can I do useDispatch for text change also? - Yes, Done
     // onChange button we did mapDispatch. Also try useDispatch
 
     let name = props.Trainer.name;
@@ -99,7 +101,7 @@ let Trainer = (props) => {
                 </div>
 
                 <div className="col-md-12">
-                    <b>Rank (num)</b>
+                    <b>Rank (number)</b>
                     <input type="number" className="form-control col-md-6 rank"
                         placeholder="Rank" maxLength="11"
                         value={rank} onChange={changeStateWithUseDispatch}/>
@@ -113,4 +115,5 @@ let Trainer = (props) => {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Trainer);
+export default Trainer;
+// export default connect(mapStateToProps, mapDispatchToProps)(Trainer);
