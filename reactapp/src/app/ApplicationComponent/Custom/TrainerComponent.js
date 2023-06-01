@@ -45,54 +45,19 @@ let Trainer = (props) => {
     let [hometown, setHometown] = useState( useSelector((state) => state.trainerReducer.Trainer.hometown) );
     let [rank, setRank] = useState( useSelector((state) => state.trainerReducer.Trainer.rank) );
 
-    ///////// To Do ///////////
-    // Change saveTrainer (rename to signinup) button/function to call props.signInUpTrainer(newtrainer) instead of props.addTrainer(newtrainer), or use useDispatch instead of props to do same job
-    // In TrainerContainer.mapDispatchToProps: signInUpTrainer dispatch to addTrainertoDB
-    // create addTrainertoDB Action on trainerActions, let it call AddTrainerToStoreAction after saving to DB
-    // 
-    
+    ///////// Connecting to Backend /////////
+    // Change saveTrainer (rename to loginTr) button/function to call props.signInUpTr(newTrainer) instead of props.addTrainer(newTrainer), or use useDispatch instead of props to dispatch saveTrainertoDB
+    // In TrainerContainer.mapDispatchToProps: signInUpTr dispatch to saveTrainertoDB
+    // create saveTrainerToDB Action on trainerActions, let it call AddTrainerToStoreAction after saving to DB (node-server's job)
+    // on node-server: create trainerDataModel, create trainerRouter (implement post call here), instantiate trainerApp in server.js to use trainerRouter
 
-    let changeStateWithMapDispatchToProps = (evt) => {
-        let target = evt.target;
-        let classList = target.classList;  // reading the class name of html when change event happens (ex: className="form-control col-md-6 name")
-        let value = target.value;  // value that user typed
 
-        if (classList.contains("name")) {
-            let newtrainer = {name: value, password, hometown, rank};
-            props.addTrainer(newtrainer);
-        }
-        else if (classList.contains("pass")) {
-            let newtrainer = {name, password: value, hometown, rank};
-            props.addTrainer(newtrainer);
-        }
-
-        evt.preventDefault();
-    }
-
-    let dispatch = useDispatch();
-    let changeStateWithUseDispatch = (evt) => {
-        let target = evt.target;
-        let classList = target.classList;  // reading the class name of html when change event happens (ex: className="form-control col-md-6 name")
-        let value = target.value;  // value that user typed
-
-        if (classList.contains("town")) {
-            let newtrainer = {name, password, hometown: value, rank};
-            dispatch(AddTrainerToStoreAction(newtrainer));
-        }
-        else if (classList.contains("rank")) {
-            let newtrainer = {name, password, hometown, rank: value};
-            dispatch(AddTrainerToStoreAction(newtrainer));
-        }
-
-        evt.preventDefault();
-    }
-
-    // props.addUser(User) => UserContainer.mapDispatchToProps(User)
-    // => userActions.AddUserToStoreAction(User) => userReducer
-    // userReducer updates states, updated states propagated by mapStateToProps
-    let saveTrainer = (evt) => {
-        let newtrainer = {name, password, hometown, rank};  // should I use this.name??
-        props.addTrainer(newtrainer);
+    // loginTr Button => props.signInUpTr(newTrainer) => TrainerContainer.mapDispatchToProps.signInUpTr => dispatch(saveTrainertoDB(newTrainer))
+    // => trainerActions.saveTrainerToDB(newTrainer) => After Saving to DB through node-server => AddTrainerToStoreAction => trainerReducer (b/c trainerReducer has case for AddTrainerToStore)
+    // trainerReducer updates store, updated states from store propagated by mapStateToProps or useSelector
+    let loginTr = (evt) => {
+        let newTrainer = {name, password, hometown, rank};  // should I use this.name??
+        props.signInUpTr(newTrainer);
 
         evt.preventDefault();
     }
@@ -136,7 +101,7 @@ let Trainer = (props) => {
                 <div className="col-md-9">
                     <input type="button" className={"btn btn-primary col-md-4 saveTrainer"} 
                             value={"SignIn-Up Trainer"} 
-                            onClick={saveTrainer}/>
+                            onClick={loginTr}/>
                 </div>
 
             </div>

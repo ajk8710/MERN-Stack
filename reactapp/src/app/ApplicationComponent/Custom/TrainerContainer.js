@@ -1,5 +1,5 @@
 import Trainer from "./TrainerComponent"
-import { AddTrainerToStoreAction } from  "../../State/CustomState/trainerActions";
+import { AddTrainerToStoreAction, saveTrainerToDB} from  "../../State/CustomState/trainerActions";
 import { connect } from "react-redux";
 
 // mapStateToProps mapDispatchToProps seems not working when I seperate to TrainerContainer - Can debug later
@@ -19,6 +19,9 @@ let mapDispatchToProps = (dispatch) => {
     return {
         addTrainer : (newTrainer) => {
             dispatch(AddTrainerToStoreAction(newTrainer));
+        },
+        signInUpTr : (newTrainer) => {
+            dispatch(saveTrainerToDB(newTrainer));
         }
     }
 }

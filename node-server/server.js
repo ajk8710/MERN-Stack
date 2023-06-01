@@ -151,6 +151,17 @@ app.use('/user', user2App);
 user2App.use('/', user2Router);  // localhost:9000/user/api/signinupuser2
 
 
+// trainerRouter
+const trainerApp = express();
+const trainerRouter = require("./routes/trainerRouter");
+
+app.use('/trainer', trainerApp);  // use trainerApp for all url with /trainer
+trainerApp.use('/', trainerRouter);  // trainerApp's job is defined in trainerRouter // ex: localhost:9000/trainer/api/signinuptrainer
+
+
+
+
 app.listen(9000);  // localhost:9000/
 
 console.log("Express is listening at localhost:9000");
+
