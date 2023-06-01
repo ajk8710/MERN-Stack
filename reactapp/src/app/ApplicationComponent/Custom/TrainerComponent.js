@@ -30,10 +30,12 @@ let Trainer = (props) => {
 
     // Thoughts:
     // try mapDispatch and useDispatch - figure out how to change the state in functional component - Done: using both MapDispatchToProps and UseDispatch
-    // - onChange we did setState - why not do mapDispatch or useDispatch
+    // - onChange we did setState - why not do mapDispatch or useDispatch - see below
 
     // setState was for text change - can I do useDispatch for text change also? - Yes, Done
-    // onChange button we did mapDispatch. Also try useDispatch
+    // - But setState was to render text change on UI by updating react VDOM state (component's state). My mapDispatch/useDispatch is updating the trainer states.
+    // I think this is issue because we want to save data when we click form submit button, not every time we change the text.
+    // I need useRef to update text change. I can also do useState (which is replacement of setState in Class Component)
 
     let name = props.Trainer.name;
     let password = props.Trainer.password;
@@ -53,6 +55,8 @@ let Trainer = (props) => {
             let newtrainer = {name, password: value, hometown, rank};
             props.addTrainer(newtrainer);
         }
+
+        evt.preventDefault();
     }
 
     let dispatch = useDispatch();
@@ -69,6 +73,18 @@ let Trainer = (props) => {
             let newtrainer = {name, password, hometown, rank: value};
             dispatch(AddTrainerToStoreAction(newtrainer));
         }
+
+        evt.preventDefault();
+    }
+
+    // props.addUser(User) => UserContainer.mapDispatchToProps(User)
+    // => userActions.AddUserToStoreAction(User) => userReducer
+    // userReducer updates states, updated states propagated by mapStateToProps
+    let saveTrainer = (evt) => {
+        let newtrainer = {name, password, hometown, rank};
+        props.addTrainer(newtrainer);
+
+        evt.preventDefault();
     }
 
     return (
@@ -105,6 +121,12 @@ let Trainer = (props) => {
                     <input type="number" className="form-control col-md-6 rank"
                         placeholder="Rank" maxLength="11"
                         value={rank} onChange={changeStateWithUseDispatch}/>
+                </div>
+
+                <div className="col-md-9">
+                    <input type="button" className={"btn btn-primary col-md-4 saveTrainer"} 
+                            value={"SignIn-Up Trainer"} 
+                            onClick={saveTrainer}/>
                 </div>
 
             </div>

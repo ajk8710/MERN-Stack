@@ -10,14 +10,14 @@ import About from "./Common/AboutComponent";
 import NotFound from "./Common/NotFoundPage";
 
 import User from "./ApplicationComponent/User/UserContainer";
-import Trainer from "./ApplicationComponent/Custom/TrainerComponent";
+import UserHook from "./ApplicationComponent/User/UserHook";
 import TrainerContainer from "./ApplicationComponent/Custom/TrainerContainer";
 
 // class based component - any component's first letter should be capital
 export default class Application extends Component {
     constructor(props) {  // props is read only object  - used to share info from one comp to another
         super(props);     // props is only way to share information between components in react
-        this.User = {Name: "Pikachu", Age: 21}
+        this.User = {Name: "Pikachu from Application Component", Age: 21}
     }
 
     // unlike functional component, class component has render method to return
@@ -28,9 +28,10 @@ export default class Application extends Component {
                 <Header age={this.User.Age}/>
                 
                 <Routes>
-                    <Route path="/" element={<Navigate replace to={"/user"}/>}/>
+                    <Route path="/" element={<Navigate replace to={"/trainer"}/>}/>
                     <Route path="/home" element={<Home user={this.User} propTypeVal={"proptypeval"}/>}/>
                     <Route path="/user" element={<User/>}/>
+                    <Route path="/userhook" element={<UserHook/>}/>
                     <Route path="/trainer" element={<TrainerContainer/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/about/:id" element={<About/>}/>

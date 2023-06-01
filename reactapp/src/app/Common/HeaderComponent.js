@@ -7,7 +7,7 @@ import { AddUserToStoreAction } from "../State/UserState/userActions";
 let Header = (props) => {
 
     let userName = props.User.userName;  // one way using connect & mapStateToProps, available as props
-    let user2Name = props.User2.userName;
+    let trainerName = props.Trainer.name;
     
     let password = useSelector((state) => state.userReducer.User.password);  // another way, mapping using useSelector hook
     let password2 = useSelector((state) => state.userReducer.User2.password);
@@ -27,13 +27,14 @@ let Header = (props) => {
 
     return (
         <>
-            Hi <b>{userName + ", "} & {user2Name + ", "}</b> Welcome to Pokemon Center
+            Hi <b>{trainerName + ", "} & {userName + ", "}</b> Welcome to Pokemon Center
             {userName == "" ?<b> Please login to see more items</b>:""}
-            <div>Password is: {password} & {password2} <button onClick={testUseDispatch}>reset</button></div>
+            {/* <div>Password is: {password} & {password2} <button onClick={testUseDispatch}>reset</button></div> */}
             <div>
                 <NavLink to="/home" className="button" activeclassname="success" >Home </NavLink>
-                <NavLink to="/user" className="button" activeclassname="success" >User </NavLink>
                 <NavLink to="/trainer" className="button" activeclassname="success" >Trainer </NavLink>
+                <NavLink to="/user" className="button" activeclassname="success" >User </NavLink>
+                <NavLink to="/userhook" className="button" activeclassname="success" >User Hook </NavLink>
                 <NavLink to="/about" className="button" activeclassname="success" >About </NavLink>
             </div>
             {/*<button onClick={goToAboutClick} >Go To About Page</button>*/}
@@ -49,7 +50,8 @@ let Header = (props) => {
 let mapStateToProps = (state) => {  // state is the store with all reducers
     return {
         User : state.userReducer.User,  // mapped as props.User
-        User2 : state.userReducer.User2
+        User2 : state.userReducer.User2,
+        Trainer : state.trainerReducer.Trainer
         // Product : state.productReducer.ProductList
     }
 }
