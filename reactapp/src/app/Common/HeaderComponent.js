@@ -33,6 +33,7 @@ let Header = (props) => {
             <div>
                 <NavLink to="/home" className="button" activeclassname="success" >Home </NavLink>
                 <NavLink to="/trainer" className="button" activeclassname="success" >Trainer </NavLink>
+                <NavLink to="/product" className="button" activeclassname="success" >Product </NavLink>
                 <NavLink to="/user" className="button" activeclassname="success" >User </NavLink>
                 <NavLink to="/userhook" className="button" activeclassname="success" >User Hook </NavLink>
                 <NavLink to="/about" className="button" activeclassname="success" >About </NavLink>

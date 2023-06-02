@@ -21,7 +21,7 @@ export const saveTrainerToDB = (newTrainer) => {
                 .then((ServerData) => {  // if resolved, data is saved to mongoose
                     let signdTrainer = ServerData.data;  // data sent from userRouter as response
                     // alert(JSON.stringify(signdTrainer))
-                    // sending trainer to the store
+                    // Done saving to DB, sending trainer to the store using AddTrainerToStoreAction
                     dispatch(AddTrainerToStoreAction(signdTrainer));  // dispatching action with signed trainer
                     // dispatch(getUserCart(signdUser._id))
                 })

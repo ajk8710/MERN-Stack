@@ -56,7 +56,10 @@ let Trainer = (props) => {
     // => trainerActions.saveTrainerToDB(newTrainer) => After Saving to DB through node-server => AddTrainerToStoreAction => trainerReducer (b/c trainerReducer has case for AddTrainerToStore)
     // trainerReducer updates store, updated states from store propagated by mapStateToProps or useSelector
     let loginTr = (evt) => {
-        let newTrainer = {name, password, hometown, rank};  // should I use this.name??
+
+        alert(`Trainer Sign-In/Sign-Up Success!\nName: ${name}\nPassword: ${password}\nHometown: ${hometown}\nRank: ${rank}`);  // confirming updates upon button click
+
+        let newTrainer = {name, password, hometown, rank};
         props.signInUpTr(newTrainer);
 
         evt.preventDefault();

@@ -8,11 +8,11 @@ schemaObj = mongooseObj.Schema;  // using the schema class from mongoose
 // Creates db with name mernstack15 or opens a connection if already present
 mongooseObj.connect("mongodb://127.0.0.1/mernstack15"); 
 
-let trainerSchema = new schemaObj({
+let productSchema = new schemaObj({
     name: {type: String, required : true},
-    password: {type: String, required: true},
-    hometown: String,
-    rank: Number
+    price: {type: Number, required: true},
+    desc: String,
+    rating: Number
 },{
     // When there is update on database,
     // it saves data with version key, so it knows which data is from which version of update
@@ -20,6 +20,6 @@ let trainerSchema = new schemaObj({
 }
 );
 
-let TrainerModel = mongooseObj.model("trainer", trainerSchema);  // trainer - collection name (table name), pluralised by mongodb
+let ProductModel = mongooseObj.model("product", productSchema);  // product - collection name (table name), pluralised by mongodb
 
-module.exports = TrainerModel;  // this should be used in trainerRouter to build trainer api's
+module.exports = ProductModel;  // this should be used in productRouter to build product api's

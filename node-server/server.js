@@ -159,6 +159,13 @@ app.use('/trainer', trainerApp);  // use trainerApp for all url with /trainer
 trainerApp.use('/', trainerRouter);  // trainerApp's job is defined in trainerRouter // ex: localhost:9000/trainer/api/signinuptrainer
 
 
+// productRouter
+const productApp = express();
+const productRouter = require("./routes/productRouter");
+
+app.use('/product', productApp);  // use productApp for all url with /product
+productApp.use('/', productRouter);  // productApp's job is defined in productRouter // ex: localhost:9000/product/api/saveproduct
+
 
 
 app.listen(9000);  // localhost:9000/

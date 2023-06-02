@@ -12,6 +12,7 @@ import NotFound from "./Common/NotFoundPage";
 import User from "./ApplicationComponent/User/UserContainer";
 import UserHook from "./ApplicationComponent/User/UserHook";
 import TrainerContainer from "./ApplicationComponent/Custom/TrainerContainer";
+import Product from "./ApplicationComponent/Custom/productComponent";
 
 // class based component - any component's first letter should be capital
 export default class Application extends Component {
@@ -33,6 +34,7 @@ export default class Application extends Component {
                     <Route path="/user" element={<User/>}/>
                     <Route path="/userhook" element={<UserHook/>}/>
                     <Route path="/trainer" element={<TrainerContainer/>}/>
+                    <Route path="/product" element={<Product/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/about/:id" element={<About/>}/>
                     <Route path="*" element={<NotFound/>}/>
