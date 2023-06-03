@@ -7,6 +7,18 @@ productRoutes.post("/api/saveproduct", (req, res) => {
     console.log("product", req.body);
     let productToSave = req.body;  // req.body is product in json format
 
+    // use schema to create new product object
+    let newProduct = new productDataModel(productToSave)  // req.body
+
+    // save is mongoose api - save to database
+    // newProduct.save().then((newProduct) => {  // will get _id once document is created
+    //     console.log("successful updating product", newProduct);
+    //     res.send(newProduct);
+    // }).catch((err1)=>{
+    //     console.log("err updating product", err1);
+    //     res.send("error while updating product");
+    // })
+
     // if product name present in entire product data model - findOne is mongoose api
     // if match return the object, if not return null
     productDataModel.findOne({name:req.body.name}).then((existingProduct) => {

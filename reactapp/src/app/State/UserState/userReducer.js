@@ -18,8 +18,8 @@ const initialState = {
 }
 
 const userReducer = (state=initialState, action) => {
-    console.log("Previous State:", state);
-    console.log("We are in user reducer with action payload - ", action.payload)
+    // console.log("Previous State:", state);
+    // console.log("We are in user reducer with action payload - ", action.payload)
 
     switch (action.type) {  // each action has type and payload
         case actionTypes.AddUserToStore:

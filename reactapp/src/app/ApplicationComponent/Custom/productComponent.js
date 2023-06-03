@@ -6,12 +6,15 @@ let Product = (props) => {
 
     // Using useState to define react state (like this.state in constructor in Class Component)
     // Initialize values from Reducer
-    let product = useSelector((state) => state.productReducer.Product);
+    let product = useSelector((state) => state.productReducer.defaultProduct);
 
     let [name, setName] = useState(product.name);
     let [price, setPrice] = useState(product.price);
     let [desc, setDesc] = useState(product.desc);
     let [rating, setRating] = useState(product.rating);
+
+    let productlist = useSelector((state) => state.productReducer.products);
+    console.log("productlist:", productlist);
 
     ///////// Connecting to Backend /////////
     // create button/function to dispatch saveProductToDB(newProduct) - readFormData
@@ -71,7 +74,7 @@ let Product = (props) => {
                 </label>
                 <br/>
 
-                <input type="submit" className={"btn btn-primary"} value="Save Product" />
+                <input type="submit" className={"btn btn-primary"} value="Save Product"/>
 
             </form>
         </>

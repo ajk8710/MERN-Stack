@@ -1,32 +1,59 @@
 import * as actionTypes from "../actionTypes";
-import axios from "axios";
 
-export const AddProductToStoreAction = (newProduct) => {
-    return {
-        type : actionTypes.AddProductToStore,
-        payload : newProduct
-    }
-}
+// product calls
+// Product Action and Server Call
+export const saveProductToDB = (product) => {
+    console.log("Product ", product);
 
-export const saveProductToDB = (newProduct) => {
-    // thunk - makes it behave synchronously
-    return (dispatch) => {
-        // here we go with ajax call: to save data to the server or fetch it from the server
-        // using fetch method of react
-        // console.log("saveUserToDB called by dispatch and synced by thunk");
-        // dispatch(loading(true));
-        axios.post("http://localhost:9000/product/api/saveproduct",  // url or end point of singninup api
-                    newProduct  // passing user object to be read as req.body
-                )
-                .then((ServerData) => {  // if resolved, data is saved to mongoose
-                    let savedProduct = ServerData.data;  // data sent from userRouter as response
-                    // alert(JSON.stringify(updatedProduct))
-                    // Done saving to DB, sending product to the store using AddProductToStoreAction
-                    dispatch(AddProductToStoreAction(savedProduct));  // dispatching action with saved product
-                    // dispatch(getUserCart(signdUser._id))
-                })
-                .catch((err)=>{
-                    console.log("err in login ", err);
+    return function (dispatch) {
+        //dispatch(loading(true));
+
+        //window.fetch - is reacts way to make ajax to server
+        window.fetch("http://localhost:9000/product/api/saveproduct", {
+            method: 'POST', //rest method type 
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(product)
+        })
+        .then(productresp => productresp.json())
+        .then((productresp)=>{
+            console.log("product save response ", productresp);
+            //dispatch(loading(false));
+            dispatch(fetchProducts());//fetched at the time of save it self
+        })
+        .catch((err)=>{
+            console.log("Error While Saving Product", err)
         })
     }
+};
+
+export const addProduct = (products)=>{
+    return {
+        type : actionTypes.AddProductToStore,
+        payload : {products}
+    }
 }
+
+export const fetchProducts = ()=>{
+    console.log("Product ");
+
+    return function (dispatch) {
+        //dispatch(loading(true));
+
+        window.fetch("http://localhost:9000/product/api/getproduct",{
+            method: 'GET' //rest method type             
+        })
+        .then(productresp => productresp.json())
+        .then((productresp)=>{
+            console.log("get products response ", productresp);
+            //dispatch(loading(false));
+            dispatch(addProduct(productresp))
+
+        })
+        .catch((err)=>{
+            console.log("Error While Saving Product", err)
+        })
+    }
+};
