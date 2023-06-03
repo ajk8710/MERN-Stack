@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { saveProductToDB } from  "../../State/CustomState/productActions";
+import DisplayProduct from "../Product/DisplayProduct";
 
 let Product = (props) => {
 
@@ -13,8 +14,8 @@ let Product = (props) => {
     let [desc, setDesc] = useState(product.desc);
     let [rating, setRating] = useState(product.rating);
 
-    let productlist = useSelector((state) => state.productReducer.products);
-    console.log("productlist:", productlist);
+    // let productlist = useSelector((state) => state.productReducer.products);
+    // console.log("productlist:", productlist);
 
     ///////// Connecting to Backend /////////
     // create button/function to dispatch saveProductToDB(newProduct) - readFormData
@@ -77,6 +78,7 @@ let Product = (props) => {
                 <input type="submit" className={"btn btn-primary"} value="Save Product"/>
 
             </form>
+            <DisplayProduct/>
         </>
     )
 
