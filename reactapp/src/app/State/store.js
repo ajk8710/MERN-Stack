@@ -16,6 +16,7 @@ import thunk from "redux-thunk";
 import userReducer from "./UserState/userReducer";
 import trainerReducer from "./CustomState/trainerReducer";
 import productReducer from "./CustomState/productReducer";
+import cartReducer from "./CartState/CartReducer";
 
 
 // custom middleware function to log action raised
@@ -28,7 +29,8 @@ const logger = () => (next) => (action) => {
 const rootReducer = combineReducers({
     userReducer,  // userReducer : userReducer - using short hand
     trainerReducer,
-    productReducer
+    productReducer,
+    cartReducer
 })
 
 // create, configure and export the store from this code

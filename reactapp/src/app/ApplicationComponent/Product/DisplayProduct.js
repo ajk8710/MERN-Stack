@@ -2,7 +2,7 @@ import React, {useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { fetchProducts } from "../../State/CustomState/productActions";
-// import DisplayDetailedProduct from "./DisplayDetailedProduct";
+import DisplayProductDetail from "./DisplayProductDetail";
 
 let DisplayProduct = ()=>{
 
@@ -17,12 +17,12 @@ let DisplayProduct = ()=>{
 
     return(
         <>
-           <h2>Below are products we can add to cart!!</h2>
+           <h3>Below are products we can add to cart</h3>
             <div>
-                {productList && productList.length>0 ?
-                    productList.map(product=>{
-                        return JSON.stringify(product)
-                        // return <DisplayDetailedProduct product={product} key={product._id}/>
+                {productList && productList.length > 0 ?  // if productList exist and its length is > 0
+                    productList.map(product => {          // for each product, create DisplayProductDetail and render here
+                        // return JSON.stringify(product)
+                        return <DisplayProductDetail product={product} key={product._id}/>
                     }):
                     "No Product Found!!"
                 }

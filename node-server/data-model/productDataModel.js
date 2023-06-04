@@ -13,7 +13,7 @@ let productSchema = new schemaObj({
     price: {type: Number, required: true},
     desc: String,
     rating: Number,
-    qty: {type: Number, default:1}
+    qty: {type: Number, default: 1}
 },{
     // When there is update on database,
     // it saves data with version key, so it knows which data is from which version of update
