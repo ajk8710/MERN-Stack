@@ -4,7 +4,7 @@ const INITIAL_STATE = []  // instead of having specific objet in array, we are s
 
 export default function cartReducer(state = INITIAL_STATE, action)
 {
-    console.log("cart Reducer", state, action);
+    // console.log("cart Reducer", state, action);
     // console.log("first element:", state[0]);
     
     // additem, removeitem, updateitem, emptyitem
@@ -22,7 +22,17 @@ export default function cartReducer(state = INITIAL_STATE, action)
             // newState is filtered state
             return [...newState, action.payload.item];  // adding the item with qty property added
 
-         // filter out all the items except the one which id matches
+            // below code is in works/practice
+            // if (state.filter(item => item._id == action.payload.item._id).length == 0) {
+            //     return [...state, action.payload.item];  // if item doesn't exist in cart, add to cart
+            // }
+            // else {  // if item already exists in cart
+            //     action.payload.id = action.payload.item._id;
+            //     action.payload.qty = action.payload.item.qty + 1;
+            //     action.type = ActionTypes.UPDATE_ITEM;  // fall through without break or return
+            // }
+            
+        // filter out all the items except the one which id matches
         case ActionTypes.REMOVE_ITEM:
             return state.filter(item => item._id!=action.payload.id);
 

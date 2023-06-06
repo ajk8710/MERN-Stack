@@ -2,7 +2,7 @@ import * as actionTypes from "../actionTypes";
 
 const initialState = {
     Trainer : {
-        name : "Red",
+        name : "",  // initially not logged in: "" or undefined
         password : "pw",
         hometown : "Pallet Town",
         rank : 0

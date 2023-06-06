@@ -2,10 +2,13 @@ import React, { useEffect, Fragment } from "react";
 import { useSelector, useDispatch} from "react-redux";
 import CartItemComponent from "./CartItemComponent";
 import CartSummaryComponent from "./CartSummaryComponent";
+import { saveCartToDB, fetchCart } from "../../State/CartState/CartActions";
 
 let CartComponent = (props)=> {
 
     let cartList = useSelector((state)=>state.cartReducer);
+    let username = useSelector((state)=>state.trainerReducer.Trainer.name);
+    console.log("Signed-In Trainer:", username)
 
     let recalculate = (cartItems)=>{
         let amount = 0, 
@@ -23,8 +26,22 @@ let CartComponent = (props)=> {
         }
     }
 
+    let dispatch = useDispatch()
+    let saveCart = (evt) => {
+        alert(`Cart Saved!`);
+        let cartObj = {username, cartList};
+        dispatch(saveCartToDB(cartObj));
+        evt.preventDefault();
+    }
+
+    let dispatchToLoad = useDispatch()
+    let loadCart = (evt) => {
+        dispatchToLoad(fetchCart());
+        evt.preventDefault();
+    }
+
     // readOnly is false by default
-    return(
+    return (
         <Fragment>
             {props.readOnly ?"" : <h1>Cart Component</h1>}
             {cartList && cartList.length > 0 ? 
@@ -61,9 +78,18 @@ let CartComponent = (props)=> {
                     </table>
 
                     <CartSummaryComponent data={recalculate(cartList)} readOnly={props.readOnly} />
+
+                    <div className="col-md-9">
+                    <input type="button" className={"btn btn-primary col-md-4 saveTrainer"} value={"Save Cart"} onClick={saveCart}/>
+                    </div>
                 </Fragment> 
                 : 
-                <b>Cart Is Empty!!! Please add some products.</b>}               
+                <>
+                    <div className="col-md-9">
+                    <input type="button" className={"btn btn-primary col-md-4 saveTrainer"} value={"Reload Cart"} onClick={loadCart}/>
+                    </div>
+                    <b>Cart Is Empty. Please add some products or load saved cart.</b>
+                </> }
         </Fragment>
     )
 }
