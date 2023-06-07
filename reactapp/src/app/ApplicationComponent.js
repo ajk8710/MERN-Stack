@@ -15,6 +15,7 @@ import TrainerContainer from "./ApplicationComponent/Custom/TrainerContainer";
 import Product from "./ApplicationComponent/Custom/productComponent";
 import DisplayProduct from "./ApplicationComponent/Product/DisplayProduct";
 import CartComponent from "./ApplicationComponent/Cart/CartComponent";
+import Checkout from "./ApplicationComponent/Cart/CheckoutComponent";
 
 // class based component - any component's first letter should be capital
 export default class Application extends Component {
@@ -39,6 +40,7 @@ export default class Application extends Component {
                     <Route path="/product" element={<Product/>}/>
                     <Route path="/displayproduct" element={<DisplayProduct/>}/>
                     <Route path="/cart" element={<CartComponent/>}/>
+                    <Route path="/checkout" element={<Checkout/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/about/:id" element={<About/>}/>
                     <Route path="*" element={<NotFound/>}/>

@@ -91,7 +91,7 @@ let CartComponent = (props)=> {
                     <CartSummaryComponent data={recalculate(cartList)} readOnly={props.readOnly} />
 
                     {
-                        props.readOnly ? <></> : // another use example of readOnly - you can hide buttons: both "" and <></> works
+                        props.readOnly ? <></> : // use example of readOnly - you can hide buttons: both "" and <></> works
                             <Fragment>
                                 <button onClick={clickToSaveCart} >
                                         Save Cart
@@ -104,7 +104,6 @@ let CartComponent = (props)=> {
                     }
                 </Fragment> 
                 :
-
                     <b>Cart Is Empty. Please add products to cart.</b>
                 }
         </Fragment>
