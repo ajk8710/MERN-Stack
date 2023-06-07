@@ -1,5 +1,6 @@
 import * as actionTypes from "../actionTypes";
 import axios from "axios";
+import { fetchCart } from "../CartState/CartActions";
 
 export const AddTrainerToStoreAction = (newTrainer) => {
     return {
@@ -19,11 +20,11 @@ export const saveTrainerToDB = (newTrainer) => {
                     newTrainer  // passing user object to be read as req.body
                 )
                 .then((ServerData) => {  // if resolved, data is saved to mongoose
-                    let signdTrainer = ServerData.data;  // data sent from userRouter as response
-                    // alert(JSON.stringify(signdTrainer))
+                    let signedTrainer = ServerData.data;  // data sent from userRouter as response
+                    // alert(JSON.stringify(signedTrainer))
                     // Done saving to DB, sending trainer to the store using AddTrainerToStoreAction
-                    dispatch(AddTrainerToStoreAction(signdTrainer));  // dispatching action with signed trainer
-                    // dispatch(getUserCart(signdUser._id))
+                    dispatch(AddTrainerToStoreAction(signedTrainer));  // dispatching action with signed trainer
+                    dispatch(fetchCart(signedTrainer._id))  // fetch cart from DB for signed trainer
                 })
                 .catch((err)=>{
                     console.log("err in login ", err);

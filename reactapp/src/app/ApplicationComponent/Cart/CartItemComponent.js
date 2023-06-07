@@ -16,7 +16,12 @@ let CartItemComponent = (props)=>{
     }
 
     let updateItemFromCart = ( productid, qty )=>{
-        dispatchToUpdate(updateItem(productid, qty))
+        if (qty <= 0) {
+            alert("Please enter positive quantity");
+        }
+        else {
+            dispatchToUpdate(updateItem(productid, qty))
+        }
     }
 
     return(

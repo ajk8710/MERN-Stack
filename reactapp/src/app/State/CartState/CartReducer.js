@@ -15,14 +15,16 @@ export default function cartReducer(state = INITIAL_STATE, action)
             // gets new array with all items except item._id equals
             let newState = state.filter(item => item._id != action.payload.item._id);
 
-            // checking if quantity is present or not, if not then add default quantity to 1, else do nothing
-            // adding new property "qty" on the fly
+            // Below commented out code is not needed because qty (default=1) is added by product schema on DB
+            // Then product list is fetched from DB and shown in the UI
+            // - checking if quantity is present or not, if not then add default quantity to 1, else do nothing
+            // - adding new property "qty" on the fly
             // !action.payload.item["qty"] ? action.payload.item["qty"] = 1 : "";  // this isn't doing anything right now - always resovles to  ""
 
             // newState is filtered state
             return [...newState, action.payload.item];  // adding the item with qty property added
 
-            // below code is in works/practice
+            // below code is in works/practice - addToCart button after updating qty on UI should increment qty by 1, not replacing qty with 1
             // if (state.filter(item => item._id == action.payload.item._id).length == 0) {
             //     return [...state, action.payload.item];  // if item doesn't exist in cart, add to cart
             // }

@@ -4,53 +4,45 @@ const cartDataModel = require("../data-model/cartDataModel");  // it will give a
 
 cartRoutes.post("/api/savecart", (req, res) => {
     //read the cart object sent in request body
-    console.log("cart to save:", req.body);
-    let cartToSave = req.body;  // req.body is cart in json format
+    console.log("cart to save - req.body:", req.body);
 
-//     // use schema to create cart object
-//     let cart = new cartDataModel(cartToSave)  // req.body
-
-//     // save is mongoose api - save to database
-//     cart.save().then((cart) => {  // will get _id once document is created
-//         console.log("successful saving cart", cart);
-//         res.send(cart);
-//     }).catch((err1)=>{
-//         console.log("err saving cart", err1);
-//         res.send("error while saving cart");
-//     })
-// })
-
-    cartDataModel.findOneAndRemove({username:req.body.username}).then((removedCart) => {
-        if (removedCart) {
-            console.log("removed cart to update");
-        }
-        // else {  // cart is not present go for cart creation
-
+    cartDataModel.findOne({userid: req.body.userid}).then((cartFoundFromDB) => {
+        if (!cartFoundFromDB) {  // if cart not found, create new cart on DB
             // use schema to create cart object
-            let cart = new cartDataModel(cartToSave)  // req.body
+            let newCart = new cartDataModel(req.body)
 
-            // save is mongoose api - save to database
-            cart.save().then((cart) => {  // will get _id once document is created
-                console.log("successful saving cart", cart);
-                res.send(cart);
-            }).catch((err1)=>{
-                console.log("err saving cart", err1);
-                res.send("error while saving cart");
+            // save new cart (save is mongoose api - save to database)
+            newCart.save().then((savedCart) => {  // will get _id once document is created
+                console.log("successful saving new cart", savedCart);
+                res.send(savedCart);
+            }).catch((err)=>{
+                res.send("error while saving new cart", err);
             })
-        // }
+        }
+        else {  // if cart found, replace cart items. Leave userid and username as it's the same.
+            cartFoundFromDB.cartList = req.body.cartList;
+
+            cartFoundFromDB.save().then((savedCart) => {  // will get _id once document is created
+                console.log("successful updating existing cart", cartFoundFromDB);
+                res.send(savedCart);
+            }).catch((err)=>{
+                console.log("error while updating existing cart", cartFoundFromDB);
+                res.send("error while updating existing cart");
+            })
+        }
     }).catch((err) => {  // if there is error while doing findOne
-        console.log("err whiled saving ", err);
-        res.send("Error while saving - existing cart");
+        console.log("error while fetching cart on DB", err);
+        res.send("error while fetching cart on DB");
     })
 })
 
-cartRoutes.get("/api/getcart", (req, res) => {
-    cartDataModel.findOne({username:req.body.username})
-    .then((myCart) => {
-        res.send(myCart);
+cartRoutes.post("/api/getcart", (req, res) => {
+    cartDataModel.findOne({userid: req.body.userid})
+    .then((userCart) => {
+        res.send(userCart);
     })
     .catch(() => {
-        res.send("error while fetching carts");
+        res.send("error while fetching cart on DB");
     })
 })
 

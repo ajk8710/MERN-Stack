@@ -9,6 +9,7 @@ schemaObj = mongooseObj.Schema;  // using the schema class from mongoose
 mongooseObj.connect("mongodb://127.0.0.1/mernstack15"); 
 
 let cartSchema = new schemaObj({
+    userid: {type: String, required: true},
     username: {type: String, required: true},
     cartList: Object
 },{

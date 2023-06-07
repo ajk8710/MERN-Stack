@@ -22,13 +22,12 @@ export const updateItem = (id, qty) => ({
     }
 });
 
-
 export const saveCartToDB = (cartObj) => {
     console.log("Cart:", cartObj);
-    console.log(JSON.stringify(cartObj));
-    // let stringifyed = {"username":"Red",
-    // "cartList":[{"_id":"647bc207d3165a2f57b0ede8","name":"Poke Ball","price":100,"desc":"Serves most basic needs","rating":1,"qty":1},
-    // {"_id":"647bc2a18075abfa8d1b0fea","name":"Super Ball","price":200,"desc":"Serves better needs","rating":2,"qty":1}]}
+    console.log("Cart Stringifyed:", JSON.stringify(cartObj));
+    // let stringifyed = 
+    // {"userid":"64792e90e2cb1cd4721bb677","username":"Red",
+    // "cartList":[{"_id":"647bc207d3165a2f57b0ede8","name":"Poke Ball","price":100,"desc":"Serves most basic needs","rating":1,"qty":1}]}
 
     return function (dispatch) {
         // dispatch(loading(true));
@@ -44,34 +43,42 @@ export const saveCartToDB = (cartObj) => {
         })
         .then(resp => resp.json())
         .then((resp) => {
-            console.log("Calling to fetch from DB", resp);
+            console.log("response from DB", resp);
             //dispatch(loading(false));
-            // dispatch(fetchCart());  //fetched at the time of save it self
         })
         .catch((err) => {
-            console.log("Error while calling to fetch from DB", err)
+            console.log("Error while getting response from DB", err)
         })
     }
 };
 
-export const fetchCart = () => {
-    // console.log(JSON.stringify(username));
+export const fetchCart = (userid) => {
 
     return function (dispatch) {
         // dispatch(loading(true));
 
-        window.fetch("http://localhost:9000/cart/api/getcart",{
-            method: 'GET', // rest method type
+        window.fetch("http://localhost:9000/cart/api/getcart", {
+            method: 'POST', // rest method type, post (not get) because we need to pass argument userid
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({userid: userid})  // here, userid argument passed in to fetchCart was a value, not object
         })
-        // .then(resp => resp.json())
-        .then((resp)=>{
-            // console.log("get products response ", productresp);
-            // dispatch(loading(false));
-            // dispatch(addItemToCart(resp))
-
+        .then(resp => resp.json())
+        .then((resp)=>{  // response is user's cart: {userid, username, cartList}
+            console.log("response from DB while fetching user's cart", resp);
+            
+            dispatch(emptyTheCart());  // remove exisiting cart on UI
+            
+            for (const item of resp.cartList) {
+                console.log("item in for-of loop:", item);
+                let action = addItemToCart(item);
+                dispatch(action);    
+            }
         })
         .catch((err)=>{
-            console.log("Error While Updating Cart to Store", err)
+            console.log("error while fetching user's cart", err)
         })
     }
 };

@@ -1,14 +1,13 @@
 import React, { useEffect, Fragment } from "react";
 import { useSelector, useDispatch} from "react-redux";
+import { useNavigate } from "react-router-dom";
 import CartItemComponent from "./CartItemComponent";
 import CartSummaryComponent from "./CartSummaryComponent";
-import { saveCartToDB, fetchCart } from "../../State/CartState/CartActions";
+import { saveCartToDB } from "../../State/CartState/CartActions";
 
 let CartComponent = (props)=> {
 
     let cartList = useSelector((state)=>state.cartReducer);
-    let username = useSelector((state)=>state.trainerReducer.Trainer.name);
-    console.log("Signed-In Trainer:", username)
 
     let recalculate = (cartItems)=>{
         let amount = 0, 
@@ -26,24 +25,36 @@ let CartComponent = (props)=> {
         }
     }
 
+    let navigate = useNavigate();
+    let navigateToCheckout = function(event) {      
+        navigate('/checkout');
+        event.preventDefault();
+    }
+
+    // when user signs in, it hits the DB then we retrieve user id from DB. (or trainer id)
+    let username = useSelector((state)=>state.trainerReducer.Trainer.name);
+    let userid = useSelector((state)=>state.trainerReducer.Trainer._id);
+    // console.log("Signed-In Trainer:", username, "ID:", userid)
+
     let dispatch = useDispatch()
-    let saveCart = (evt) => {
-        alert(`Cart Saved!`);
-        let cartObj = {username, cartList};
-        dispatch(saveCartToDB(cartObj));
-        evt.preventDefault();
+    let clickToSaveCart = (evt) => {
+        if (!userid) {  // if userid does not exist, user is not signed in
+            alert("Please sign in before saving the cart");
+            navigate('/trainer');
+        }
+        else {
+            alert(`Cart Saved!`);
+            let cartObj = {userid, username, cartList};
+            dispatch(saveCartToDB(cartObj));
+            evt.preventDefault();
+        } 
     }
 
-    let dispatchToLoad = useDispatch()
-    let loadCart = (evt) => {
-        dispatchToLoad(fetchCart());
-        evt.preventDefault();
-    }
-
-    // readOnly is false by default
+    // readOnly is false by default - you can make is true by passing readOnly={true} from parent (ex: ApplicationComponent)
+    // it makes component reusable (ex: billing page can be same as cart page but read only)
     return (
         <Fragment>
-            {props.readOnly ?"" : <h1>Cart Component</h1>}
+            {props.readOnly ? "" : <h1>Cart Component</h1>}
             {cartList && cartList.length > 0 ? 
                 <Fragment>
                     <table>
@@ -79,17 +90,23 @@ let CartComponent = (props)=> {
 
                     <CartSummaryComponent data={recalculate(cartList)} readOnly={props.readOnly} />
 
-                    <div className="col-md-9">
-                    <input type="button" className={"btn btn-primary col-md-4 saveTrainer"} value={"Save Cart"} onClick={saveCart}/>
-                    </div>
+                    {
+                        props.readOnly ? <></> : // another use example of readOnly - you can hide buttons: both "" and <></> works
+                            <Fragment>
+                                <button onClick={clickToSaveCart} >
+                                        Save Cart
+                                </button>
+
+                                <button onClick={navigateToCheckout} >
+                                    Go To Checkout
+                                </button>
+                            </Fragment> 
+                    }
                 </Fragment> 
-                : 
-                <>
-                    <div className="col-md-9">
-                    <input type="button" className={"btn btn-primary col-md-4 saveTrainer"} value={"Reload Cart"} onClick={loadCart}/>
-                    </div>
-                    <b>Cart Is Empty. Please add some products or load saved cart.</b>
-                </> }
+                :
+
+                    <b>Cart Is Empty. Please add products to cart.</b>
+                }
         </Fragment>
     )
 }

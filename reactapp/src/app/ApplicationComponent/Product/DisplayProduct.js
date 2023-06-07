@@ -12,7 +12,8 @@ let DisplayProduct = ()=>{
     // useEffect is used as componentDidMount hook
     // The empty array as an argument to useEffect means
     // the fetch will only be called on initial render, and not on subsequent renders when state changes
-    useEffect(()=>{ dispatch(fetchProducts()) }, [])
+    // but it is called when productList is updated - may need to study useEffect more
+    useEffect(()=>{ dispatch(fetchProducts()) }, [])  // fechProducts fetches products from DB, then adds them to product state by calling addProduct action
     // console.log("productList ", productList)
 
     return(
