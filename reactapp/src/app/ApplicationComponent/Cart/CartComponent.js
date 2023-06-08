@@ -4,19 +4,26 @@ import { useNavigate } from "react-router-dom";
 import CartItemComponent from "./CartItemComponent";
 import CartSummaryComponent from "./CartSummaryComponent";
 import { saveCartToDB } from "../../State/CartState/CartActions";
+import Coupon from "../Coupon/CouponComponent";
 
 let CartComponent = (props)=> {
 
-    let cartList = useSelector((state)=>state.cartReducer);
+    let cartList = useSelector((state) => state.cartReducer);
+    let couponNum = useSelector((state) => state.couponReducer.couponNum);
 
     let recalculate = (cartItems)=>{
         let amount = 0, 
-            count = 0;
+            count = 0,
+            discount = 0.9;  // 10% discount
 
         // sum of all items and all qtys
         for (let item of cartItems) {
             amount += item.qty * item.price;
             count  += item.qty; 
+        }
+
+        if (couponNum != 1) {
+            amount *= discount
         }
 
         return {
@@ -26,8 +33,13 @@ let CartComponent = (props)=> {
     }
 
     let navigate = useNavigate();
-    let navigateToCheckout = function(event) {      
-        navigate('/checkout');
+    let navigateToCheckout = function(event) {
+        if (couponNum == 1) {
+            alert("Coupon not applied! Please apply coupon :)")
+        }
+        else {
+            navigate('/checkout');
+        }
         event.preventDefault();
     }
 
@@ -87,6 +99,8 @@ let CartComponent = (props)=> {
                             } 
                         </tbody>
                     </table>
+                    
+                    {props.readOnly ? <>Coupon Code {couponNum} (10% discount) is applied!</> : <Coupon/>}
 
                     <CartSummaryComponent data={recalculate(cartList)} readOnly={props.readOnly} />
 
