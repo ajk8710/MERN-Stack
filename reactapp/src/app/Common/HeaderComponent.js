@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";  // hoooks for navigations
 
 import { connect, useSelector, useDispatch } from "react-redux";
@@ -25,22 +25,35 @@ let Header = (props) => {
         evt.preventDefault();  // prevents html default behavior - Event invoked in child propagating to parent
     }
 
+    // upon sign in from Trainer page, props.Trainer.name will change
+    let isLoggedIn = false;
+    if (trainerName) {  // empty string resolves to false
+        isLoggedIn = true;
+    }
+ 
     return (
         <>
             Hi <b>{trainerName + ", "} & {userName + ", "}</b> Welcome to Pokemon Center
-            {userName == "" ?<b> Please login to see more items</b>:""}
+            {userName == "" ? <b>Please login to see more items</b> : ""}
             {/* <div>Password is: {password} & {password2} <button onClick={testUseDispatch}>reset</button></div> */}
             <div>
-                <NavLink to="/home" className="button" activeclassname="success" >Home </NavLink>
-                <NavLink to="/trainer" className="button" activeclassname="success" >Trainer </NavLink>
-                <NavLink to="/product" className="button" activeclassname="success" >Product </NavLink>
-                <NavLink to="/cart" className="button" activeclassname="success" >Cart </NavLink>
-                <NavLink to="/user" className="button" activeclassname="success" >User </NavLink>
-                <NavLink to="/userhook" className="button" activeclassname="success" >User Hook </NavLink>
-                <NavLink to="/about" className="button" activeclassname="success" >About </NavLink>
+                <NavLink to="/home" className="button" activeclassname="success" > Home </NavLink>
+                <NavLink to="/trainer" className="button" activeclassname="success" > Trainer </NavLink>
+                {
+                    isLoggedIn ?
+                        <>
+                            <NavLink to="/product" className="button" activeclassname="success" > Product </NavLink>
+                            <NavLink to="/cart" className="button" activeclassname="success" > Cart </NavLink>
+                        </>
+                        
+                    :
+                        <></>
+                }
+                <NavLink to="/about" className="button" activeclassname="success" > About </NavLink>
+                {/* <NavLink to="/user" className="button" activeclassname="success" >User </NavLink>
+                <NavLink to="/userhook" className="button" activeclassname="success" >User Hook </NavLink> */}
             </div>
             {/*<button onClick={goToAboutClick} >Go To About Page</button>*/}
-            {/*<h1>This is Header Component</h1>*/}
             {/*<b>Passed from App to Header: {age}</b>*/}
         </>
     )

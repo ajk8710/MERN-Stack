@@ -11,7 +11,7 @@ import CartItemComponent from "./CartItemComponent";
 // Show a Button to Proceed to Payment
 // Integrate this page on CartComponent Button (Go to checkout) - (Go To Checkout From Cart Component)
 
-// Second Task :
+// Second Task:
 // Create a state using useState to show hide (Make Payment Message)
 // Upon Clicking on MakePayment button, hide everything and just show the message - "Thank you for the payment, your items under process!"
 // Change the header from Checkout Page to Payment Page
@@ -37,35 +37,35 @@ let Checkout = (props) => {
                         <button onClick={(evt) => setDoneCheckout(true)}> Make Payment </button>
                     </>
                 :
-                <>
-                    <h4><b>Thank you for the payment!</b></h4>
-                    <h4><b>Purchase Confirmation</b></h4>
-                    <h5><b>Your Name: {trainer.name}</b></h5>
-                    <h5><b>Delivery Address: {deliveryAddress}</b></h5>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Description</th>
-                                <th>Rating</th>
-                                <th>Quantity</th>
-                                <th>Item Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                cartList.map(item => {
-                                    return <CartItemComponent
-                                                item={item}
-                                                key={item._id}
-                                                readOnly={true}/>
-                                })
-                            }
-                        </tbody>
-                    </table>
-                    <h5></h5>
-                </>
+                    <>
+                        <h4><b>Thank you for the payment!</b></h4>
+                        <h4><b>Purchase Confirmation</b></h4>
+                        <h5><b>Your Name: {trainer.name}</b></h5>
+                        <h5><b>Delivery Address: {deliveryAddress}</b></h5>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Description</th>
+                                    <th>Rating</th>
+                                    <th>Quantity</th>
+                                    <th>Item Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    cartList.map(item => {
+                                        return <CartItemComponent
+                                                    item={item}
+                                                    key={item._id}
+                                                    readOnly={true}/>
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                        <h5></h5>
+                    </>
             }
         </>
     )

@@ -17,6 +17,12 @@ let Product = (props) => {
     // let productlist = useSelector((state) => state.productReducer.products);
     // console.log("productlist:", productlist);
 
+    let trainerName = useSelector(state => state.trainerReducer.Trainer.name);
+    let isAdmin = false;
+    if (trainerName == "admin") {
+        isAdmin = true;
+    }
+
     ///////// Connecting to Backend /////////
     // create button/function to dispatch saveProductToDB(newProduct) - readFormData
     // create saveProductToDB Action on productActions, let it call AddProductToStoreAction after saving to DB (node-server's job)
@@ -40,45 +46,52 @@ let Product = (props) => {
 
     return (
         <>
-            <h1>Save Product Details</h1>
-            <form className={"form col-md-10 product component"} onSubmit={readFormData}>
+            {
+                isAdmin ?
+                    <>
+                        <h1>Save Product Details</h1>
+                        <form className={"form col-md-10 product component"} onSubmit={readFormData}>
 
-                <label>
-                    <b>Product Name:</b>
-                    <input type="text" className={"form-control col-md-12"} value={name}
-                            placeholder="Please enter product name" maxLength={20} required
-                            onChange={ (evt)=>{setName(evt.target.value)} }/>
-                </label>
-                <br/>
+                            <label>
+                                <b>Product Name:</b>
+                                <input type="text" className={"form-control col-md-12"} value={name}
+                                        placeholder="Please enter product name" maxLength={20} required
+                                        onChange={ (evt)=>{setName(evt.target.value)} }/>
+                            </label>
+                            <br/>
 
-                <label>
-                    <b>Price:</b>
-                    <input type="number" className={"form-control col-md-12"} value={price}
-                            placeholder="Please enter price" required
-                            onChange={ (evt)=>{setPrice(evt.target.value)} }/>
-                </label>
-                <br/>
+                            <label>
+                                <b>Price:</b>
+                                <input type="number" className={"form-control col-md-12"} value={price}
+                                        placeholder="Please enter price" required
+                                        onChange={ (evt)=>{setPrice(evt.target.value)} }/>
+                            </label>
+                            <br/>
 
-                <label>
-                    <b>Description:</b>
-                    <input type="text" className={"form-control col-md-12"} value={desc}
-                            placeholder="Please enter description" maxLength={40}
-                            onChange={ (evt)=>{setDesc(evt.target.value)} }/>
-                </label>
-                <br/>
+                            <label>
+                                <b>Description:</b>
+                                <input type="text" className={"form-control col-md-12"} value={desc}
+                                        placeholder="Please enter description" maxLength={40}
+                                        onChange={ (evt)=>{setDesc(evt.target.value)} }/>
+                            </label>
+                            <br/>
 
-                <label>
-                    <b>Rating:</b>
-                    <input type="number" className={"form-control col-md-12"} value={rating}
-                            placeholder="Please enter rating"
-                            onChange={ (evt)=>{setRating(evt.target.value)} }/>
-                </label>
-                <br/>
+                            <label>
+                                <b>Rating:</b>
+                                <input type="number" className={"form-control col-md-12"} value={rating}
+                                        placeholder="Please enter rating"
+                                        onChange={ (evt)=>{setRating(evt.target.value)} }/>
+                            </label>
+                            <br/>
 
-                <input type="submit" className={"btn btn-primary"} value="Save Product"/>
+                            <input type="submit" className={"btn btn-primary"} value="Save Product"/>
 
-            </form>
-            <DisplayProduct/>
+                        </form>
+                        <DisplayProduct/>
+                    </>
+                :
+                    <DisplayProduct/>
+            }
         </>
     )
 
