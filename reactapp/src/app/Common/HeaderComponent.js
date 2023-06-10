@@ -44,6 +44,7 @@ let Header = (props) => {
                         <>
                             <NavLink to="/product" className="button" activeclassname="success" > Product </NavLink>
                             <NavLink to="/cart" className="button" activeclassname="success" > Cart </NavLink>
+                            <NavLink to="/recentorders" className="button" activeclassname="success" > Recent Orders </NavLink>
                         </>
                         
                     :

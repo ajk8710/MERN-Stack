@@ -175,6 +175,14 @@ app.use('/cart', cartApp);  // use cartApp for all url with /cart
 cartApp.use('/', cartRouter);  // cartApp's job is defined in cartRouter // ex: localhost:9000/cart/api/savecart
 
 
+// orderRouter
+const orderApp = express();
+const orderRouter = require("./routes/orderRouter");
+
+app.use('/order', orderApp);  // use orderApp for all url with /order
+orderApp.use('/', orderRouter);  // orderApp's job is defined in orderRouter // ex: localhost:9000/order/api/saveorder
+
+
 
 app.listen(9000);  // localhost:9000/
 

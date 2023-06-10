@@ -17,3 +17,4 @@ export const EMPTY_CART = "CART.EMPTY_CART";
 
 // action types for cart operations
 export const GENERATE_COUPON = "COUPON.GENERATE_COUPON";
+export const GET_RECENT_ORDERS = "ORDER.GET_RECENT_ORDERS";

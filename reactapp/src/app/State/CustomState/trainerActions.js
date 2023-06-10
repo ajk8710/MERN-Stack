@@ -1,6 +1,7 @@
 import * as actionTypes from "../actionTypes";
 import axios from "axios";
 import { fetchCart } from "../CartState/CartActions";
+import { fetchRecentOrders } from "../OrderState/orderActions";
 
 export const AddTrainerToStoreAction = (newTrainer) => {
     return {
@@ -24,7 +25,8 @@ export const saveTrainerToDB = (newTrainer) => {
                     // alert(JSON.stringify(signedTrainer))
                     // Done saving to DB, sending trainer to the store using AddTrainerToStoreAction
                     dispatch(AddTrainerToStoreAction(signedTrainer));  // dispatching action with signed trainer
-                    dispatch(fetchCart(signedTrainer._id))  // fetch cart from DB for signed trainer
+                    dispatch(fetchCart(signedTrainer._id));  // fetch cart from DB for signed trainer
+                    dispatch(fetchRecentOrders(signedTrainer._id));  // fetch recent orders
                 })
                 .catch((err)=>{
                     console.log("err in login ", err);

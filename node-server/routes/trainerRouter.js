@@ -10,8 +10,11 @@ trainerRoutes.post("/api/signinuptrainer", (req, res) => {
 
     // if Trainer name present in entire Trainer data model - findOne is mongoose api
     // if match return the object, if not return null
-    trainerDataModel.findOne({name: {$regex: new RegExp(trainerName, "i")} }).then((existingTrainer) => {  // this regex for case insensitive comparison will slow down on large data set
-        if (existingTrainer) {                                                                      // actual upper-lower case data on DB depends on how name is saved on initial sign up
+    // trainerDataModel.findOne({name: {$regex: new RegExp(trainerName, "i")} }).then((existingTrainer) => {  // this regex for case insensitive comparison will slow down on large data set
+                                                                                                    // actual upper-lower case data on DB depends on how name is saved on initial sign up
+                                                                                                    // this regex having bug of Re being same as Red, Gr being same as Green
+    trainerDataModel.findOne({name: trainerName}).then((existingTrainer) => {
+        if (existingTrainer) {                                                                      
             console.log("sigin in success ", existingTrainer);
             res.send(existingTrainer);
         }

@@ -18,6 +18,7 @@ import trainerReducer from "./CustomState/trainerReducer";
 import productReducer from "./CustomState/productReducer";
 import cartReducer from "./CartState/CartReducer";
 import couponReducer from "./CouponState/CouponReducer";
+import orderReducer from "./OrderState/orderReducer";
 
 // custom middleware function to log action raised
 const logger = () => (next) => (action) => {
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
     trainerReducer,
     productReducer,
     cartReducer,
-    couponReducer
+    couponReducer,
+    orderReducer
 })
 
 // create, configure and export the store from this code
