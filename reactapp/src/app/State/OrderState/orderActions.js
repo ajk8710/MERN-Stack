@@ -1,8 +1,15 @@
 import * as actionTypes from "../actionTypes";
 
-export const getRecentOrdersAction = (order) => {
+export const getRecentOrdersAction = (recentOrdersfromDB) => {
     return {
         type: actionTypes.GET_RECENT_ORDERS,
+        payload: recentOrdersfromDB
+    }
+}
+
+export const cancelOrder = (order) => {
+    return {
+        type: actionTypes.CANCEL_ORDER,
         payload: order
     }
 }

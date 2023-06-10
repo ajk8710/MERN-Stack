@@ -16,6 +16,7 @@ let CartItemComponent = (props)=>{
     }
 
     let updateItemFromCart = ( productid, qty )=>{
+        console.log("aaa",productid, qty )
         if (qty <= 0) {
             alert("Please enter positive quantity");
         }
