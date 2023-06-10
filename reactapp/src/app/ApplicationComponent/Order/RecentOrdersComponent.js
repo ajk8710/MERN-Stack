@@ -23,21 +23,23 @@ let RecentOrders = (prop) => {
     // ]
     // recentOrdersForUser.map((eachOrder)=>{return(console.log(eachOrder.orderList))});
 
-    let listOfOrderList = recentOrdersForUser.map((eachOrder)=>{return(eachOrder.orderList)});
-    for (let orderList of listOfOrderList) {
-        for (let item of orderList) {
-            console.log(item);
+    // console.log() to help understand
+    let listOfOrderLists = recentOrdersForUser.map((eachOrder)=>{return(eachOrder.orderList)});  // without this, recentOrdersForUser's length is 0 or 1, everytihng in one chunk
+    for (let orderList of listOfOrderLists) {  // for each orderList (list of items) of the order
+        for (let item of orderList) {          // for each item
+            console.log(item);                 // print item
         }
     }
 
+    // creating orders = [ [items..], [items..], [items..] ]
     let orders = [];
     let index = 0;
-    for (let orderList of listOfOrderList) {
-        orders.push([]);
-        for (let item of orderList) {
+    for (let orderList of listOfOrderLists) {  // for each orderList (list of items) of the order
+        orders.push([]);                       // initialize an array to save items of the order
+        for (let item of orderList) {          // save each items to the array
             orders[index].push(item);
         }
-        index++;
+        index++;                               // advance index of orders[]
     }
 
     console.log(orders);
@@ -58,8 +60,7 @@ let RecentOrders = (prop) => {
                 </thead>
                 <tbody>
                     {
-                        
-                        orders.map(order=>{
+                        orders.map(order => {
                             return (
                                 <>
                                     <h5>Order</h5>
