@@ -9,8 +9,9 @@ const orderReducer = (state=initialState, action) => {
             return newState;                        // action.payload.recentOrdersfromDB if comes with {} - payload: {recentOrdersfromDB} or {recentOrdersfromDB: recentOrdersfromDB}
 
         case actionTypes.CANCEL_ORDER:
-            let newstate = action.payload.map((eachOrder)=>{return eachOrder});
-            state.filter(item => item._id!=action.payload.id);
+            return state.filter(item => item._id!=action.payload);  // Do this if payload comes as - payload: orderID (from orderActions)
+            // return state.filter(item => item._id!=action.payload.orderID);  // Do this if payload comes as - payload: {orderID} (from orderActions) with brackets meaning {orderID: orderID}
+            
         default:
             return state;
     }

@@ -7,17 +7,18 @@ export const getRecentOrdersAction = (recentOrdersfromDB) => {
     }
 }
 
-export const cancelOrder = (order) => {
+export const cancelOrderAction = (orderID) => {
     return {
         type: actionTypes.CANCEL_ORDER,
-        payload: order
+        payload: orderID
     }
 }
 
 export const saveOrderToDB = (orderObj) => {
     console.log("Order Object:", orderObj);
     // return function(dispatch) {}
-    // return function () {  - not calling dispatch(saveOrderToDB(orderObj)). Instead calling saveOrderToDB(orderObj).
+    // return function () {  - not calling dispatch(saveOrderToDB(orderObj)). Instead calling saveOrderToDB(orderObj)
+    // Not using dispatch because react state doesn't need to be updated upon saveOrderToDB, but upon fetchRecentOrders.
 
         // window.fetch - is reacts way to make ajax to server
         window.fetch("http://localhost:9000/order/api/saveorder", {
@@ -68,3 +69,30 @@ export const fetchRecentOrders = (userid) => {
         })
     }
 };
+
+export const requestCancelOrderToDB = (orderID) => {
+
+    return function (dispatch) {
+
+        window.fetch("http://localhost:9000/order/api/cancelorder", {
+            method: 'POST',  // rest method type 
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({orderID})  // passing orderID as object {orderID: orderID} and stringfied
+        })
+        // .then(resp => resp.json())
+        .then((resp) => {
+            console.log("response from DB", resp);
+            // if cancel sucessful because within 2 days - depending on db response
+            dispatch(cancelOrderAction(orderID));
+
+            // if cancel not successful because not within 2 days
+            // alert user
+        })
+        .catch((err) => {
+            console.log("Error while getting response from DB", err)
+        })
+    }
+}

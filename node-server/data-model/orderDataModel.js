@@ -11,7 +11,9 @@ mongooseObj.connect("mongodb://127.0.0.1/mernstack15");
 let orderSchema = new schemaObj({
     userid: {type: String, required: true},
     username: {type: String, required: true},
-    orderList: Object
+    orderList: Object,
+    orderDate: {type: Date, default: Date.now},
+    canceled: {type: Boolean, default: false}
 },{
     // When there is update on database,
     // it saves data with version key, so it knows which data is from which version of update

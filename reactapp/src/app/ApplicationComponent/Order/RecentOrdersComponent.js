@@ -9,8 +9,9 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CartItemComponent from "../Cart/CartItemComponent";
 import { saveOrderToDB } from "../../State/OrderState/orderActions";
+import CancelOrderButton from "./CancelOrderComponent";
 
-let RecentOrders = (prop) => {
+let RecentOrders = (props) => {
 
     let recentOrdersForUser = useSelector(state => state.orderReducer);
 
@@ -44,29 +45,14 @@ let RecentOrders = (prop) => {
     }
     // console.log(orders);
 
-    // keep list of order ids
+    // list of order ids = [orderID, orderID, orderID]
     let orderIDs = recentOrdersForUser.map((eachOrder)=>{return(eachOrder._id)});
+
+    // index to be incremented as cancel button is created, so that each button is linked to orderIDs[orderIDIndex]
     let orderIDIndex = 0;
     let incrementIndex = () => {
         orderIDIndex = orderIDIndex + 1;
     }
-    // let [orderIDIndex, setOrderIDIndex] = useState(0);  // indexing starts from 0
-    // let incrementIndex = () => {
-    //     setOrderIDIndex(orderIDIndex + 1);
-    // }
-
-    let dispatch = useDispatch()
-    let clickToCancelOrder = (orderID) => {
-        // console.log(recentOrdersForUser.filter(eachOrder => eachOrder._id != orderID));
-        console.log("Canceling the order")
-        console.log("Index:", orderIDIndex);
-        console.log("Order ID:", orderID);
-        // dispatch(saveOrderToDB(orderID));
-
-        
-    }
-
-    // I think I may have to create order item component - remove item button there, instead of cancel order button.
 
     return (
         <>
@@ -84,14 +70,15 @@ let RecentOrders = (prop) => {
                 </thead>
                 <tbody>
                     {
-                        orders.map(order => {
+                        orders.map(itemsOfTheOrder => {
                             return (
                                 <>
-                                    <h5><b>Order</b></h5>
+                                    <h5><b>Order ID: {orderIDs[orderIDIndex]}</b></h5>
                                     {
-                                        order.map(item => {return <CartItemComponent item={item} key={item._id} readOnly={true}/>})
+                                        itemsOfTheOrder.map(item => {return <CartItemComponent item={item} key={item._id} readOnly={true}/>})
                                     }
-                                    <button onClick={ () => clickToCancelOrder(orderIDs[orderIDIndex]) }>Cancel Order</button>
+                                    {/* <button onClick={ () => clickToCancelOrder() }>Cancel Order</button> */}
+                                    <CancelOrderButton orderID={orderIDs[orderIDIndex]}/>
                                     {incrementIndex()}
                                 </>
                             );
@@ -103,4 +90,4 @@ let RecentOrders = (prop) => {
     )
 }
 
-export default RecentOrders
+export default RecentOrders;
