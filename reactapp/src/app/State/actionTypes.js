@@ -8,7 +8,6 @@ export const AddTrainerToStore = "TRAINER.ADDTRAINERTOSTORE"
 
 export const AddProductToStore = "PRODUCT.ADDPRODUCTTOSTORE"
 
-
 // action types for cart operations
 export const ADD_ITEM = "CART.ADD_ITEM";
 export const REMOVE_ITEM = "CART.REMOVE_ITEM";
@@ -23,3 +22,6 @@ export const GENERATE_COUPON = "COUPON.GENERATE_COUPON";
 // Also from log in (trainerActions.saveTrainerToDB)
 export const GET_RECENT_ORDERS = "ORDER.GET_RECENT_ORDERS";                    
 export const CANCEL_ORDER = "ORDER.CANCEL_ORDER";
+
+// action types for hobby
+export const GET_HOBBYLIST = "HOBBY.GET_HOBBYLIST";

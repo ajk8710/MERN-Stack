@@ -18,6 +18,7 @@ import CartComponent from "./ApplicationComponent/Cart/CartComponent";
 import Checkout from "./ApplicationComponent/Cart/CheckoutComponent";
 import Coupon from "./ApplicationComponent/Coupon/CouponComponent";
 import RecentOrders from "./ApplicationComponent/Order/RecentOrdersComponent";
+import Hobby from "./ApplicationComponent/Hobby/hobbyComponent";
 
 // class based component - any component's first letter should be capital
 export default class Application extends Component {
@@ -39,6 +40,7 @@ export default class Application extends Component {
                     <Route path="/user" element={<User/>}/>
                     <Route path="/userhook" element={<UserHook/>}/>
                     <Route path="/trainer" element={<TrainerContainer/>}/>
+                    <Route path="/hobby" element={<Hobby/>}/>
                     <Route path="/product" element={<Product/>}/>
                     <Route path="/displayproduct" element={<DisplayProduct/>}/>
                     <Route path="/cart" element={<CartComponent/>}/>

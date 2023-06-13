@@ -78,13 +78,13 @@ let RecentOrders = (props) => {
                         orders.map(itemsOfTheOrder => {
                             return (
                                 <>
-                                    <h5><b>Order Date: {months[orderDates[orderIDIndex].getMonth()]} {orderDates[orderIDIndex].getDate()}
-                                        {" "}{orderDates[orderIDIndex].getFullYear()}, Order ID: {orderIDs[orderIDIndex].slice(-6)}</b></h5>
+                                    <tr><td><b>Order Date: {months[orderDates[orderIDIndex].getMonth()]} {orderDates[orderIDIndex].getDate()}
+                                        {" "}{orderDates[orderIDIndex].getFullYear()}, Order ID: {orderIDs[orderIDIndex].slice(-6)}</b></td></tr>
                                     {
                                         itemsOfTheOrder.map(item => {return <CartItemComponent item={item} key={item._id} readOnly={true}/>})
                                     }
                                     {/* <button onClick={ () => clickToCancelOrder() }>Cancel Order</button> */}
-                                    <CancelOrderButton orderID={orderIDs[orderIDIndex]}/>
+                                    <tr><td><CancelOrderButton orderID={orderIDs[orderIDIndex]} key={orderIDs[orderIDIndex]}/></td></tr>
                                     {incrementIndex()}
                                 </>
                             );

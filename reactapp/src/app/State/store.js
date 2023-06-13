@@ -19,6 +19,7 @@ import productReducer from "./CustomState/productReducer";
 import cartReducer from "./CartState/CartReducer";
 import couponReducer from "./CouponState/CouponReducer";
 import orderReducer from "./OrderState/orderReducer";
+import hobbyReducer from "./HobbyState/hobbyReducer";
 
 // custom middleware function to log action raised
 const logger = () => (next) => (action) => {
@@ -30,6 +31,7 @@ const logger = () => (next) => (action) => {
 const rootReducer = combineReducers({
     userReducer,  // userReducer : userReducer - using short hand
     trainerReducer,
+    hobbyReducer,
     productReducer,
     cartReducer,
     couponReducer,

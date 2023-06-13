@@ -10,9 +10,7 @@ const couponReducer = (state=initialState, action) => {
             return {...state, couponNum : action.payload}
         default:
             return state;
-
     }
-
 }
 
 export default couponReducer;

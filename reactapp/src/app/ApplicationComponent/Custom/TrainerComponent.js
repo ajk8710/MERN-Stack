@@ -43,8 +43,9 @@ let Trainer = (props) => {
     // setFunctions let us change values on textbox as we type - by changing react state (name, password, etc) - thus re-rendering
     let [name, setName] = useState(props.Trainer.name);
     let [password, setPassword] = useState(props.Trainer.password);
-    let [hometown, setHometown] = useState( useSelector((state) => state.trainerReducer.Trainer.hometown) );
-    let [rank, setRank] = useState( useSelector((state) => state.trainerReducer.Trainer.rank) );
+    let [hometown, setHometown] = useState( useSelector(state => state.trainerReducer.Trainer.hometown) );
+    let [rank, setRank] = useState( useSelector(state => state.trainerReducer.Trainer.rank) );
+    let [hobby, setHobby] = useState( useSelector(state => state.trainerReducer.Trainer.hobby) );
 
     // get the original name from DB. One with original upper & lower case when sign-up.
     // name field have been changed by typing on textbox - may not be original upper & lower case on DB
@@ -87,7 +88,7 @@ let Trainer = (props) => {
                 <div className="col-md-12">
                     <b>Password</b>
                     <input type="text" className="form-control col-md-6 pass"
-                        placeholder="User Name" maxLength={20}
+                        placeholder="Password" maxLength={20}
                         value={password} onChange={ (evt) => {setPassword(evt.target.value)} }/>
                 </div>
 
@@ -103,6 +104,13 @@ let Trainer = (props) => {
                     <input type="number" className="form-control col-md-6 rank"
                         placeholder="Rank" maxLength="11"
                         value={rank} onChange={ (evt) => {setRank(evt.target.value)} }/>
+                </div>
+
+                <div className="col-md-12">
+                    <b>Hobby</b>
+                    <input type="text" className="form-control col-md-6 hobby"
+                        placeholder="Hobby" maxLength="20"
+                        value={hobby} onChange={ (evt) => {setHobby(evt.target.value)} }/>
                 </div>
 
                 <div className="col-md-9">

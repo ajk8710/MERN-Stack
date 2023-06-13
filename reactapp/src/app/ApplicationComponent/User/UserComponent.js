@@ -75,7 +75,7 @@ export default class User extends Component{
                         <input type="text" className="form-control col-md-6 username"
                                 value={this.state.userName} 
                                 placeholder="User Name" onChange={this.onTextChange} maxLength={40}/>
-                            </div>
+                    </div>
 
                     <div className="col-md-12">
                         <b>Password</b>

@@ -33,7 +33,9 @@ webpackConfig = {
     },
     // whenever request comes to the port, respond with html - the only html in entire react app
     // All other html codes, we'll create through react
-    plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })]
+    plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })],
+
+    cache: false  // added to debug changes not being updated even on refreshing chrome
 }
 
 module.exports = webpackConfig;

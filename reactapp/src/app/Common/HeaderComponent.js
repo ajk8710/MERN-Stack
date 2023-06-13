@@ -39,6 +39,7 @@ let Header = (props) => {
             <div>
                 <NavLink to="/home" className="button" activeclassname="success" > Home </NavLink>
                 <NavLink to="/trainer" className="button" activeclassname="success" > Trainer </NavLink>
+                <NavLink to="/hobby" className="button" activeclassname="success" > Hobby </NavLink>
                 {
                     isLoggedIn ?
                         <>

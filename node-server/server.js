@@ -159,6 +159,14 @@ app.use('/trainer', trainerApp);  // use trainerApp for all url with /trainer
 trainerApp.use('/', trainerRouter);  // trainerApp's job is defined in trainerRouter // ex: localhost:9000/trainer/api/signinuptrainer
 
 
+// hobbyRouter
+const hobbyApp = express();
+const hobbyRouter = require("./routes/hobbyRouter");
+
+app.use('/hobby', hobbyApp);  // use hobbyApp for all url with /hobby
+hobbyApp.use('/', hobbyRouter);  // hobbyApp's job is defined in hobbyRouter // ex: localhost:9000/hobby/api/savehobby
+
+
 // productRouter
 const productApp = express();
 const productRouter = require("./routes/productRouter");
@@ -187,4 +195,3 @@ orderApp.use('/', orderRouter);  // orderApp's job is defined in orderRouter // 
 app.listen(9000);  // localhost:9000/
 
 console.log("Express is listening at localhost:9000");
-
