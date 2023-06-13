@@ -14,7 +14,7 @@ let CancelOrderButton = (props) => {
 
     return (
         <>
-            <button onClick={clickToCancelOrder}>Cancel Order ID: {orderID}</button>
+            <button onClick={clickToCancelOrder}>Cancel Order ID: {orderID.slice(-6)}</button>
         </>
     )
 }

@@ -47,16 +47,21 @@ orderRoutes.post("/api/cancelorder", (req, res) => {
             console.log("Error: Order to cancel does not exist on DB");
             res.send("Error: Order to cancel does not exist on DB");
         }
-        else {  // if order found, mark canceled true
-            orderFoundFromDB.canceled = true;
-
-            orderFoundFromDB.save().then((updatedOrder) => {  // will get _id once document is created
-                console.log("Order canceled on DB:", updatedOrder);
-                res.send("Order canceled on DB");
-            }).catch((err)=>{
-                console.log("Error: Order found but could not cancel on DB");
-                res.send("Error: Order found but could not cancel on DB");
-            })
+        else {  // if order found, check if order cancel time limit has passed (300 seconds for now)
+            let timeElapsed = new Date().getTime() - orderFoundFromDB.orderDate.getTime();  // getTime returns time in milliseconds since January 1, 1970, UTC
+            if (timeElapsed > 300000) {
+                res.send(false);  // send false as response, meaning order should not be canceled
+            }
+            else {
+                orderFoundFromDB.canceled = true;  // mark canceled true
+                orderFoundFromDB.save().then((updatedOrder) => {
+                    console.log("Order canceled on DB:", updatedOrder);
+                    res.send(true);
+                }).catch((err)=>{
+                    console.log("Error: Order found but could not cancel on DB");
+                    res.send("Error: Order found but could not cancel on DB");
+                })
+            }
         }
     }).catch((err) => {  // if there is error while doing findOne
         console.log("error while fetching order on DB", err);

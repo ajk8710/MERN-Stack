@@ -48,11 +48,16 @@ let RecentOrders = (props) => {
     // list of order ids = [orderID, orderID, orderID]
     let orderIDs = recentOrdersForUser.map((eachOrder)=>{return(eachOrder._id)});
 
+    // list of order date = [orderDATE, orderDATE, orderDATE]
+    let orderDates = recentOrdersForUser.map((eachOrder)=>{return(new Date(eachOrder.orderDate))});
+
     // index to be incremented as cancel button is created, so that each button is linked to orderIDs[orderIDIndex]
     let orderIDIndex = 0;
     let incrementIndex = () => {
         orderIDIndex = orderIDIndex + 1;
     }
+
+    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     return (
         <>
@@ -73,7 +78,8 @@ let RecentOrders = (props) => {
                         orders.map(itemsOfTheOrder => {
                             return (
                                 <>
-                                    <h5><b>Order ID: {orderIDs[orderIDIndex]}</b></h5>
+                                    <h5><b>Order Date: {months[orderDates[orderIDIndex].getMonth()]} {orderDates[orderIDIndex].getDate()}
+                                        {" "}{orderDates[orderIDIndex].getFullYear()}, Order ID: {orderIDs[orderIDIndex].slice(-6)}</b></h5>
                                     {
                                         itemsOfTheOrder.map(item => {return <CartItemComponent item={item} key={item._id} readOnly={true}/>})
                                     }

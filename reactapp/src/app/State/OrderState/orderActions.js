@@ -82,14 +82,17 @@ export const requestCancelOrderToDB = (orderID) => {
             },
             body: JSON.stringify({orderID})  // passing orderID as object {orderID: orderID} and stringfied
         })
-        // .then(resp => resp.json())
-        .then((resp) => {
+        .then(resp => resp.json())
+        .then((resp) => {  // response is true or false depending on curr time minus order time
             console.log("response from DB", resp);
-            // if cancel sucessful because within 2 days - depending on db response
-            dispatch(cancelOrderAction(orderID));
 
-            // if cancel not successful because not within 2 days
-            // alert user
+            if (resp) {
+                dispatch(cancelOrderAction(orderID));
+                alert("Order canceled");
+            }
+            else {
+                alert("Order cancel time limit has passed (5 mins)");
+            }
         })
         .catch((err) => {
             console.log("Error while getting response from DB", err)
