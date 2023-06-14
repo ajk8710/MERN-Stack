@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { removeItem, updateItem} from "../../State/CartState/CartActions";
+import { removeItem, updateItem } from "../../State/CartState/CartActions";
 
 let CartItemComponent = (props)=>{
     let item = props.item;

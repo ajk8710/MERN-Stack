@@ -7,6 +7,13 @@ export const getRecentOrdersAction = (recentOrdersfromDB) => {
     }
 }
 
+export const getCanceledOrdersAction = (canceledOrdersfromDB) => {
+    return {
+        type: actionTypes.GET_CANCELED_ORDERS,
+        payload: canceledOrdersfromDB
+    }
+}
+
 export const cancelOrderAction = (orderID) => {
     return {
         type: actionTypes.CANCEL_ORDER,
@@ -52,7 +59,7 @@ export const fetchRecentOrders = (userid) => {
             body: JSON.stringify({userid: userid})  // here, userid argument passed in to fetchOrder was a value, not object
         })
         .then(resp => resp.json())
-        .then((resp) => {  // response is user's all orders: list of {userid, username, orderList}
+        .then((resp) => {  // response is user's all orders with canceled=false: list of {_id, userid, username, orderList, canceled, orderDate} (empty list if no previous orders)
             console.log("response from DB while fetching user's recent orders", JSON.stringify(resp));
             
             dispatch(getRecentOrdersAction(resp));
@@ -66,6 +73,30 @@ export const fetchRecentOrders = (userid) => {
         })
         .catch((err) => {
             console.log("error while fetching user's recent orders", err)
+        })
+    }
+};
+
+export const fetchCanceledOrders = (userid) => {
+
+    return function (dispatch) {
+
+        window.fetch("http://localhost:9000/order/api/getcanceledorders", {
+            method: 'POST', // rest method type, post (not get) because we need to pass argument userid
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({userid: userid})  // here, userid argument passed in to fetchOrder was a value, not object
+        })
+        .then(resp => resp.json())
+        .then((resp) => {  // response is user's all orders with canceled=true: list of {_id, userid, username, orderList, canceled, orderDate} (empty list if no previous orders)
+            console.log("response from DB while fetching user's canceled orders", JSON.stringify(resp));
+            
+            dispatch(getCanceledOrdersAction(resp));
+        })
+        .catch((err) => {
+            console.log("error while fetching user's canceled orders", err)
         })
     }
 };

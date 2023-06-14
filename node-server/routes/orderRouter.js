@@ -1,6 +1,7 @@
 const express = require("express");
 const orderRoutes = express.Router({});  // options for router can be put in, like case sensetive
 const orderDataModel = require("../data-model/orderDataModel");  // it will give access to mongoose queries
+const orderCanceledDataModel = require("../data-model/orderCanceledDataModel");
 
 orderRoutes.post("/api/saveorder", (req, res) => {
     //read the order object sent in request body
@@ -39,6 +40,17 @@ orderRoutes.post("/api/getrecentorders", async function(req, res) {  // async is
     // })
 })
 
+orderRoutes.post("/api/getcanceledorders", async function(req, res) {  // async is needed for await
+    canceledOrders = []
+    const cursor = orderDataModel.find({userid: req.body.userid})
+    for await (const doc of cursor) {
+        if (doc.canceled) {  // only fetch non canceled orders
+            canceledOrders.push(doc);
+        }
+    }
+    res.send(canceledOrders);
+})
+
 orderRoutes.post("/api/cancelorder", (req, res) => {
     console.log("Order ID read on Router:", req.body);
 
@@ -55,6 +67,9 @@ orderRoutes.post("/api/cancelorder", (req, res) => {
             else {
                 orderFoundFromDB.canceled = true;  // mark canceled true
                 orderFoundFromDB.save().then((updatedOrder) => {
+                    // let canceledOrderObj = new orderCanceledDataModel(updatedOrder);  // save this to another collection: orderCanceled - but this is getting error for now
+                    // canceledOrderObj.save();
+
                     console.log("Order canceled on DB:", updatedOrder);
                     res.send(true);
                 }).catch((err)=>{

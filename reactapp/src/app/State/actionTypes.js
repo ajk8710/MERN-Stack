@@ -20,7 +20,8 @@ export const GENERATE_COUPON = "COUPON.GENERATE_COUPON";
 // action types for saving/fetching recent recent orders
 // GET_RECENT_ORDERS called upon Make Payment from Checkout (Make Payment triggers saveOrderToDB then fetchRecentOrders from DB)
 // Also from log in (trainerActions.saveTrainerToDB)
-export const GET_RECENT_ORDERS = "ORDER.GET_RECENT_ORDERS";                    
+export const GET_RECENT_ORDERS = "ORDER.GET_RECENT_ORDERS";
+export const GET_CANCELED_ORDERS = "ORDER.GET_CANCELED_ORDERS"  // called upon log-in and successful order cancelation
 export const CANCEL_ORDER = "ORDER.CANCEL_ORDER";
 
 // action types for hobby

@@ -5,15 +5,17 @@
 // Add a button to Cancel (like) we have remove in CartComponent and then save again, 
 // order can be cancelled within 2 days after that it should be marked delivered
 
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import CartItemComponent from "../Cart/CartItemComponent";
-import { saveOrderToDB } from "../../State/OrderState/orderActions";
+import OrderItemComponent from "./OrderItemComponent";
 import CancelOrderButton from "./CancelOrderComponent";
 
 let RecentOrders = (props) => {
 
-    let recentOrdersForUser = useSelector(state => state.orderReducer);
+    let recentOrdersForUser = useSelector(state => state.orderReducer.recentOrderList);
+    let canceledOrdersForUser = useSelector(state => state.orderReducer.canceledOrderList);
+    console.log("Canceled Orders:",  JSON.stringify(canceledOrdersForUser));
 
     // JSON.stringify(recentOrdersForUser) =
     // [
@@ -57,6 +59,40 @@ let RecentOrders = (props) => {
         orderIDIndex = orderIDIndex + 1;
     }
 
+
+    // For Canceled Orders
+
+    // canceledOrdersForUser: [{"_id":"6489e94148f58ad90edb8012", "userid":"64792e90e2cb1cd4721bb677", "username":"Red",
+    // "orderList":[{"_id":"647bc207d3165a2f57b0ede8","name":"Poke Ball","price":100,"desc":"Serves most basic needs","rating":1,"qty":1},
+    // {"_id":"647bc2a18075abfa8d1b0fea","name":"Super Ball","price":200,"desc":"Serves better needs","rating":2,"qty":2}],
+    // "canceled":true, "orderDate":"2023-06-14T16:22:25.938Z"}]
+
+    let listOfOrderListsC = canceledOrdersForUser.map((eachOrder)=>{return(eachOrder.orderList)});  // list of orderList (orderList is list of items of the Order)
+    console.log(listOfOrderListsC);
+
+    // creating canceled orders = [ [items..], [items..], [items..] ]
+    let ordersC = [];
+    let indexC = 0;
+    for (let orderList of listOfOrderListsC) {  // for each orderList (list of items) of the Order
+        ordersC.push([]);                       // initialize an array to save items of the Order
+        for (let item of orderList) {          // save each items to the array
+            ordersC[indexC].push(item);
+        }
+        indexC++;                               // advance index of orders[]
+    }
+
+    // list of order ids = [orderID, orderID, orderID]
+    let orderIDsC = canceledOrdersForUser.map((eachOrder)=>{return(eachOrder._id)});
+
+    // list of order date = [orderDATE, orderDATE, orderDATE]
+    let orderDatesC = canceledOrdersForUser.map((eachOrder)=>{return(new Date(eachOrder.orderDate))});
+
+    // index to be incremented as iterating over canceled orders - [ [items..], [items..], [items..] ]
+    let orderIDIndexC = 0;
+    let incrementIndexC = () => {
+        orderIDIndexC = orderIDIndexC + 1;
+    }
+
     let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     return (
@@ -86,6 +122,37 @@ let RecentOrders = (props) => {
                                     {/* <button onClick={ () => clickToCancelOrder() }>Cancel Order</button> */}
                                     <tr><td><CancelOrderButton orderID={orderIDs[orderIDIndex]} key={orderIDs[orderIDIndex]}/></td></tr>
                                     {incrementIndex()}
+                                </>
+                            );
+                        })
+                    }
+                </tbody>
+            </table>
+
+            <h1>Canceled Orders</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Rating</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        ordersC.map(itemsOfTheOrder => {
+                            return (
+                                <>
+                                    <tr><td><b>Order Date: {months[orderDatesC[orderIDIndexC].getMonth()]} {orderDatesC[orderIDIndexC].getDate()}
+                                        {" "}{orderDatesC[orderIDIndexC].getFullYear()}, Order ID: {orderIDsC[orderIDIndexC].slice(-6)}</b></td></tr>
+                                    {
+                                        itemsOfTheOrder.map(item => {return <OrderItemComponent item={item} key={item._id}/>})
+                                    }
+                                    {/* <tr><td><CancelOrderButton orderID={orderIDs[orderIDIndex]} key={orderIDs[orderIDIndex]}/></td></tr> */}
+                                    {incrementIndexC()}
                                 </>
                             );
                         })
