@@ -41,6 +41,7 @@ orderRoutes.post("/api/getrecentorders", async function(req, res) {  // async is
 })
 
 orderRoutes.post("/api/getcanceledorders", async function(req, res) {  // async is needed for await
+    console.log("User ID read on Router:", req.body);
     canceledOrders = []
     const cursor = orderDataModel.find({userid: req.body.userid})
     for await (const doc of cursor) {

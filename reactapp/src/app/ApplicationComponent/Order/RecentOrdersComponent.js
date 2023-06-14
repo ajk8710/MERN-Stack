@@ -15,7 +15,6 @@ let RecentOrders = (props) => {
 
     let recentOrdersForUser = useSelector(state => state.orderReducer.recentOrderList);
     let canceledOrdersForUser = useSelector(state => state.orderReducer.canceledOrderList);
-    console.log("Canceled Orders:",  JSON.stringify(canceledOrdersForUser));
 
     // JSON.stringify(recentOrdersForUser) =
     // [
