@@ -6,10 +6,11 @@
 // order can be cancelled within 2 days after that it should be marked delivered
 
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CartItemComponent from "../Cart/CartItemComponent";
 import OrderItemComponent from "./OrderItemComponent";
 import CancelOrderButton from "./CancelOrderComponent";
+import { fetchProducts } from "../../State/CustomState/productActions";
 
 let RecentOrders = (props) => {
 
@@ -20,7 +21,8 @@ let RecentOrders = (props) => {
     // [
     //     { "_id": "6483b79102c73743bb50d339",  "userid": "64792e90e2cb1cd4721bb677",  "username": "Red",
     //         "orderList": [ {"_id":"647bc207d3165a2f57b0ede8",  "name": "Poke Ball",  "price": 100, "desc": "Serves most basic needs",  "rating": 1,  "qty": 1},
-    //                        {"_id":"647bc2a18075abfa8d1b0fea",  "name": "Super Ball",  "price": 200, "desc": "Serves better needs",  "rating": 2,  "qty": 2} ]
+    //                        {"_id":"647bc2a18075abfa8d1b0fea",  "name": "Super Ball",  "price": 200, "desc": "Serves better needs",  "rating": 2,  "qty": 2} ],
+    //         "canceled": false,  "orderDate" :"2023-06-14T16:22:25.938Z"}
     //     },
     //     { Another Order }, { Another Order }...
     // ]
@@ -53,9 +55,9 @@ let RecentOrders = (props) => {
     let orderDates = recentOrdersForUser.map((eachOrder)=>{return(new Date(eachOrder.orderDate))});
 
     // index to be incremented as cancel button is created, so that each button is linked to orderIDs[orderIDIndex]
-    let orderIDIndex = 0;
+    let orderIDIndex = orders.length - 1;  // to iterate in reverse order
     let incrementIndex = () => {
-        orderIDIndex = orderIDIndex + 1;
+        orderIDIndex--;
     }
 
 
@@ -87,12 +89,15 @@ let RecentOrders = (props) => {
     let orderDatesC = canceledOrdersForUser.map((eachOrder)=>{return(new Date(eachOrder.orderDate))});
 
     // index to be incremented as iterating over canceled orders - [ [items..], [items..], [items..] ]
-    let orderIDIndexC = 0;
+    let orderIDIndexC = ordersC.length - 1;  // to iterate in reverse order
     let incrementIndexC = () => {
-        orderIDIndexC = orderIDIndexC + 1;
+        orderIDIndexC--;
     }
 
     let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    let dispatch = useDispatch();
+    dispatch(fetchProducts());  // update product list from DB, so that (product._id==item._id) works on OrderItemComponent
 
     return (
         <>
@@ -110,13 +115,13 @@ let RecentOrders = (props) => {
                 </thead>
                 <tbody>
                     {
-                        orders.map(itemsOfTheOrder => {
+                        orders.slice(0).reverse().map(itemsOfTheOrder => {  // slice(0).reverse() to iterate in reverse order
                             return (
                                 <>
                                     <tr><td><b>Order Date: {months[orderDates[orderIDIndex].getMonth()]} {orderDates[orderIDIndex].getDate()}
                                         {" "}{orderDates[orderIDIndex].getFullYear()}, Order ID: {orderIDs[orderIDIndex].slice(-6)}</b></td></tr>
                                     {
-                                        itemsOfTheOrder.map(item => {return <CartItemComponent item={item} key={item._id} readOnly={true}/>})
+                                        itemsOfTheOrder.map(item => {return <OrderItemComponent item={item} key={item._id} wasCanceled={false}/>})
                                     }
                                     {/* <button onClick={ () => clickToCancelOrder() }>Cancel Order</button> */}
                                     <tr><td><CancelOrderButton orderID={orderIDs[orderIDIndex]} key={orderIDs[orderIDIndex]}/></td></tr>
@@ -142,15 +147,14 @@ let RecentOrders = (props) => {
                 </thead>
                 <tbody>
                     {
-                        ordersC.map(itemsOfTheOrder => {
+                        ordersC.slice(0).reverse().map(itemsOfTheOrder => {  // slice(0).reverse() to iterate in reverse order
                             return (
                                 <>
                                     <tr><td><b>Order Date: {months[orderDatesC[orderIDIndexC].getMonth()]} {orderDatesC[orderIDIndexC].getDate()}
                                         {" "}{orderDatesC[orderIDIndexC].getFullYear()}, Order ID: {orderIDsC[orderIDIndexC].slice(-6)}</b></td></tr>
                                     {
-                                        itemsOfTheOrder.map(item => {return <OrderItemComponent item={item} key={item._id}/>})
+                                        itemsOfTheOrder.map(item => {return <OrderItemComponent item={item} key={item._id} wasCanceled={true}/>})
                                     }
-                                    {/* <tr><td><CancelOrderButton orderID={orderIDs[orderIDIndex]} key={orderIDs[orderIDIndex]}/></td></tr> */}
                                     {incrementIndexC()}
                                 </>
                             );

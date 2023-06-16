@@ -23,27 +23,31 @@ export const cancelOrderAction = (orderID) => {
 
 export const saveOrderToDB = (orderObj) => {
     console.log("Order Object:", orderObj);
-    // return function(dispatch) {}
-    // return function () {  - not calling dispatch(saveOrderToDB(orderObj)). Instead calling saveOrderToDB(orderObj)
-    // Not using dispatch because react state doesn't need to be updated upon saveOrderToDB, but upon fetchRecentOrders.
 
-        // window.fetch - is reacts way to make ajax to server
-        window.fetch("http://localhost:9000/order/api/saveorder", {
-            method: 'POST',  // rest method type 
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(orderObj)
-        })
-        .then(resp => resp.json())
-        .then((resp) => {
-            console.log("response from DB", resp);
-        })
-        .catch((err) => {
-            console.log("Error while getting response from DB", err)
-        })
-    // }
+    return function(dispatch) {
+            // return function () {  - not calling dispatch(saveOrderToDB(orderObj)). Instead calling saveOrderToDB(orderObj)
+            // Not using dispatch because react state doesn't need to be updated upon saveOrderToDB, but upon fetchRecentOrders.
+            // - Actually I need it because fetchRecentOrders may get called before saveOrderToDB finishes,
+            //   so I call fetchRecentOrders here and dispatch is needed to be initialized in functional component - so it's taking dispatch as parameter to be used with fetchRecentOrders
+
+            // window.fetch - is reacts way to make ajax to server
+            window.fetch("http://localhost:9000/order/api/saveorder", {
+                method: 'POST',  // rest method type 
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderObj)
+            })
+            .then(resp => resp.json())
+            .then((resp) => {
+                console.log("response from DB", resp);
+                dispatch(fetchRecentOrders(orderObj.userid));  // calling fetchRecentOrders after saving to DB finishes.
+            })                                                 // if I call fetchRecentOrders elsewhere, it may get called before saveOrderToDB finishes.
+            .catch((err) => {
+                console.log("Error while getting response from DB", err)
+            })
+    }
 };
 
 export const fetchRecentOrders = (userid) => {

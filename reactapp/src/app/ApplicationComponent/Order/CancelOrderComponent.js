@@ -13,7 +13,7 @@ let CancelOrderButton = (props) => {
         dispatch(requestCancelOrderToDB(orderID));
         setTimeout(() => {
             dispatchToFetchCanceledOrders(fetchCanceledOrders(userid));  // without delay, it fetches canceled order list before update is made from requesting cancel order
-        }, "500");                                                       // there should be better way to resolve this
+        }, "500");                                                       // there should be better way to resolve this -> I can call fetchCanceledOrders inside requestCancelOrderToDB
         evt.preventDefault();
     }
 

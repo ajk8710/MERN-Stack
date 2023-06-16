@@ -31,8 +31,8 @@ let Checkout = (props) => {
         // when user signs in, it hits the DB then we retrieve user id from DB. (or trainer id)
         let orderObj = {userid: trainer._id, username: trainer.name, orderList: cartList};
         // dispatch(saveOrderToDB(orderObj));  // no need to use dispatch here, because it's not being used in saveOrderToDB
-        saveOrderToDB(orderObj);
-        dispatch(fetchRecentOrders(trainer._id));
+        dispatch(saveOrderToDB(orderObj));
+        // dispatch(fetchRecentOrders(trainer._id));  // This may get called before saveOrderToDB finishes. Should be put inside saveOrderToDB.
 
         evt.preventDefault();
     }
