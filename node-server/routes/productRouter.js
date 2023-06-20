@@ -19,12 +19,17 @@ productRoutes.post("/api/saveproduct", (req, res) => {
     //     res.send("error while updating product");
     // })
 
-    // if product name present in entire product data model - findOne is mongoose api
-    // if match return the object, if not return null
-    productDataModel.findOne({name:req.body.name}).then((existingProduct) => {
-        if (existingProduct) {
-            console.log("saving success", existingProduct);
-            res.send(existingProduct);
+    // if product name present in entire product data model - findOne is mongoose api where it returns the data object if match and return null if no match
+    productDataModel.findOne({name:req.body.name}).then((productFoundOnDB) => {
+        if (productFoundOnDB) {
+            productFoundOnDB.rating = req.body.rating;  // update rating - to be fixed to update avg rating
+            productFoundOnDB.save().then((productUpdated) => {
+                console.log("existing product updated on DB", productUpdated);
+                res.send(productUpdated);
+            }).catch((err)=>{
+                console.log("Error: Order found but could not cancel on DB");
+                res.send("Error: Order found but could not cancel on DB");
+            })
         }
         else {  // product is not present go for product creation
 
@@ -33,16 +38,16 @@ productRoutes.post("/api/saveproduct", (req, res) => {
 
             // save is mongoose api - save to database
             newProduct.save().then((newProduct) => {  // will get _id once document is created
-                console.log("successful saving", newProduct);
+                console.log("new product saved on DB", newProduct);
                 res.send(newProduct);
-            }).catch((err1)=>{
-                console.log("err saving", err1);
-                res.send("error while saving");
+            }).catch((err1) => {
+                console.log("err on new product save", err1);
+                res.send("err on new product save");
             })
         }
     }).catch((err) => {  // if there is error while doing findOne
-        console.log("err whiled saving ", err);
-        res.send("Error while saving - existing product");
+        console.log("err on existing product update", err);
+        res.send("err on existing product update");
     })
 })
 

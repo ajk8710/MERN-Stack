@@ -10,8 +10,9 @@ let Hobby = () => {
     let hobbyList = useSelector(state => state.hobbyReducer.hobbyList);
 
     let dispatch = useDispatch();
-    let clickToSaveHobbyToDB = () => {
+    let clickToSaveHobbyToDB = (evt) => {
         dispatch(saveHobbyToDB({hobbyName}));  // sending as object {hobbyName: hobbyName}
+        evt.preventDefault();
     }
 
     return (

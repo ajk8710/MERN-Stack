@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { addItemToCart } from "../../State/CartState/CartActions";
 
@@ -20,17 +21,22 @@ let OrderItemComponent = (props) => {
         }
     }
     
+    let navigate = useNavigate();
+    let clickToSubmitReview = (evt) => {  // navigate to submitreview url and pass item._id as route param ("/submitreview/:productid") - ApplicationComponent renders SubmitReviewComponent upon this url
+        navigate("/submitreview/" + item._id);
+        evt.preventDefault();
+    }
+
     return(
         <tr>
             <td>{item.name}</td>
             <td>{item.price}</td>
             <td>{item.desc}</td>
-            <td>{item.rating}</td>
             <td>{item.qty}</td>
             <td>{item.price*item.qty}</td>
             <td>
                 <button onClick={() => clickToAddProductToCart(productList.find(product => product._id==item._id))}> Add to Cart </button>
-                {wasCanceled ? "Thank you for reconsidering!": "Thank you for your reorders!"}
+                {wasCanceled ? "Thank you for reconsidering!" : <button onClick={clickToSubmitReview}> Write Review </button>}
             </td>
         </tr>
     )

@@ -18,9 +18,9 @@ let DisplayProductDetail = ({product}) => {
             {product.name}
                 {showHide ?
                     <ul>
-                    <li>{product.price}</li>
-                    <li>{product.desc}</li>
-                    <li>{product.rating}</li> 
+                    <li>Price: {product.price}</li>
+                    <li>Desc: {product.desc}</li>
+                    <li>Rating: {product.rating}</li> 
 
                     <button onClick={()=>{addProductToCart(product)}}>Add To Cart</button>
                 </ul>

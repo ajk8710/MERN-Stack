@@ -108,7 +108,6 @@ let RecentOrders = (props) => {
                         <th>Name</th>
                         <th>Price</th>
                         <th>Description</th>
-                        <th>Rating</th>
                         <th>Quantity</th>
                         <th>Total</th>
                     </tr>
@@ -140,7 +139,6 @@ let RecentOrders = (props) => {
                         <th>Name</th>
                         <th>Price</th>
                         <th>Description</th>
-                        <th>Rating</th>
                         <th>Quantity</th>
                         <th>Total</th>
                     </tr>
