@@ -12,7 +12,9 @@ let productSchema = new schemaObj({
     name: {type: String, required : true},
     price: {type: Number, required: true},
     desc: String,
-    rating: Number,
+    rating: {type: Number, default: 0},  // initialize rating with 0
+    reviews: {type: [{userid: String, username: String, rating: Number, contents: String, date: Date}], default: []},
+    numReviews: {type: Number, default: 0},  // initialize numReviews with 0
     qty: {type: Number, default: 1}
 },{
     // When there is update on database,

@@ -7,6 +7,8 @@ let SubmitReview = (props) => {
 
     const { productid } = useParams();  // param from url .../submitreview/:productid - <Route path="/submitreview/:productid" element={<SubmitReview/>}/> on ApplicationComponent
 
+    let trainer = useSelector(state => state.trainerReducer.Trainer);
+
     let productList = useSelector((state) => state.productReducer.products);  // state.productReducer.products on frontend is updated from fecthProduct call at RecentOrdersComponent
     let product = productList.filter(product => product._id==productid);
     let productName = "Product to be Reviewed";
@@ -21,13 +23,13 @@ let SubmitReview = (props) => {
         productRating = product[0].rating
     }
 
-    let [reviewRating, setReviewRating] = useState("10");
+    let [reviewRating, setReviewRating] = useState(10);
     let [reviewContents, setReviewContents] = useState("");
 
     let dispatch = useDispatch();
     let navigate = useNavigate();
     let clickToSaveProductToDB = (evt) => {
-        let updatedProduct = {name: productName, price: productPrice, desc: productDesc, rating: reviewRating}
+        let updatedProduct = {name: productName, price: productPrice, desc: productDesc, rating: reviewRating, reviews: {userid: trainer._id, username: trainer.name, rating: reviewRating, contents: reviewContents, date: new Date()}}
         dispatch(saveProductToDB(updatedProduct));
         alert("Thank you for your review!");
         navigate("/productreviews/" + productid);  // navigate to submitreview url and pass item._id as route param ("/productreviews/:productid") - ApplicationComponent renders ProductReviewsComponent upon this url
@@ -43,7 +45,7 @@ let SubmitReview = (props) => {
 
             <h5><b>Give Your Rating</b></h5>
             <input type="number" className="form-control col-md-6" placeholder="" min="0" max="10"
-                value={reviewRating} onChange={evt => setReviewRating(evt.target.value)}/>
+                value={reviewRating} onChange={evt => setReviewRating(Math.round(evt.target.value))}/>
 
             <h5><b>Write Your Review</b></h5>
             <input type="text" className="form-control col-md-6" placeholder="" maxLength="200" size="40"

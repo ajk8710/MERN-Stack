@@ -126,7 +126,7 @@ export const requestCancelOrderToDB = (orderID) => {
                 alert("Order canceled");
             }
             else {
-                alert("Order cancel time limit has passed (5 mins)");
+                alert("Order cancel time limit has passed (5 mins). Please contact us.");
             }
         })
         .catch((err) => {

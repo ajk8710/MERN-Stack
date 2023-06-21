@@ -22,7 +22,11 @@ productRoutes.post("/api/saveproduct", (req, res) => {
     // if product name present in entire product data model - findOne is mongoose api where it returns the data object if match and return null if no match
     productDataModel.findOne({name:req.body.name}).then((productFoundOnDB) => {
         if (productFoundOnDB) {
-            productFoundOnDB.rating = req.body.rating;  // update rating - to be fixed to update avg rating
+            let avgRating = (productFoundOnDB.rating + Number(req.body.rating)) / (productFoundOnDB.numReviews + 1);  // req.body.rating read as string and not number unless parse to Number
+            productFoundOnDB.rating = avgRating;
+            productFoundOnDB.reviews.unshift(req.body.reviews);  // add on head
+            productFoundOnDB.numReviews++;
+
             productFoundOnDB.save().then((productUpdated) => {
                 console.log("existing product updated on DB", productUpdated);
                 res.send(productUpdated);
@@ -31,7 +35,7 @@ productRoutes.post("/api/saveproduct", (req, res) => {
                 res.send("Error: Order found but could not cancel on DB");
             })
         }
-        else {  // product is not present go for product creation
+        else {  // if product does not exist, create new product
 
             // use schema to create new product object
             let newProduct = new productDataModel(productToSave)  // req.body
