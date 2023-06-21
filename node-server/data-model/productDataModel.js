@@ -15,6 +15,7 @@ let productSchema = new schemaObj({
     rating: {type: Number, default: 0},  // initialize rating with 0
     reviews: {type: [{userid: String, username: String, rating: Number, contents: String, date: Date}], default: []},
     numReviews: {type: Number, default: 0},  // initialize numReviews with 0
+    sum: {type: Number, default: 0},  // sum of all ratings
     qty: {type: Number, default: 1}
 },{
     // When there is update on database,

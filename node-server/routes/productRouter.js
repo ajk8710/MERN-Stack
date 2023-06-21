@@ -22,10 +22,11 @@ productRoutes.post("/api/saveproduct", (req, res) => {
     // if product name present in entire product data model - findOne is mongoose api where it returns the data object if match and return null if no match
     productDataModel.findOne({name:req.body.name}).then((productFoundOnDB) => {
         if (productFoundOnDB) {
-            let avgRating = (productFoundOnDB.rating + Number(req.body.rating)) / (productFoundOnDB.numReviews + 1);  // req.body.rating read as string and not number unless parse to Number
+            let avgRating = (productFoundOnDB.sum + Number(req.body.rating)) / (productFoundOnDB.numReviews + 1);  // req.body.rating read as string and not number unless parse to Number
             productFoundOnDB.rating = avgRating;
             productFoundOnDB.reviews.unshift(req.body.reviews);  // add on head
             productFoundOnDB.numReviews++;
+            productFoundOnDB.sum += Number(req.body.rating);
 
             productFoundOnDB.save().then((productUpdated) => {
                 console.log("existing product updated on DB", productUpdated);

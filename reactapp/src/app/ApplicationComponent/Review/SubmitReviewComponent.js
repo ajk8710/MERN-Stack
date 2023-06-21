@@ -41,7 +41,7 @@ let SubmitReview = (props) => {
             <h1><b>Submit review for your purchase</b></h1>
             <h5><b>Product ID: {productid}</b></h5>
             <h5><b>Product Name: {productName}</b></h5>
-            <h5><b>Current User Rating: {productRating}</b></h5>
+            <h5><b>User Rating: {Math.round(productRating * 10) / 10}</b></h5>
 
             <h5><b>Give Your Rating</b></h5>
             <input type="number" className="form-control col-md-6" placeholder="" min="0" max="10"
@@ -52,8 +52,6 @@ let SubmitReview = (props) => {
                 value={reviewContents} onChange={evt => setReviewContents(evt.target.value)}/>
 
             <button onClick={clickToSaveProductToDB}> Submit Review </button>
-
-
         </>
     )
 }
