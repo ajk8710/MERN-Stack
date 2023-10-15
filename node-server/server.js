@@ -86,19 +86,21 @@ app.all('/info', (req, res) => {
 });
 
 // welcome url must be present to use welcome.js in index.html
-app.get('/public/welcome', (req, res) => {
+app.get('/public/welcome.js', (req, res) => {
     res.sendFile(__dirname+"/public/welcome.js");
 });
 
-// but this creates chunk of codes in one file
+// but this creates chunk of endpoint codes in one file (app.get -> res.sendFile...)
 // (10 get endpoints for 10 files, and more if there are image files)
 // Since these are all static file (no calculations), use static middleware
 
 // Use express.static to serve static files from the server
-app.use('/static', express.static('public'));  // for all url starting with /static, serve from the public
+app.use('/static', express.static('public'));  // for all url starting with /static, serve from the public folder
 
 // Now localhost:9000/static (and localhost:9000/static/index.html) is equal to localhost:9000/info
 // (even without get methods explicitly defined)
+
+// localhost:9000/static/Grapes.jpg works without explicitly defining endpoint
 
 
 // Routing:
