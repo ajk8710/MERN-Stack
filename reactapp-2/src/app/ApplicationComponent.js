@@ -1,8 +1,12 @@
 import React, {Component} from "react";
+import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import "./app.css";
+
 import Home from "./Common/HomeComponent";
+import About from "./Common/AboutComponent";
 import Header from "./Common/HeaderComponent";
 import Footer from "./Common/FooterComponent";
-
+import NotFound from "./Common/NotFoundPage";
 
 export default class Application extends Component {
     constructor(props) {
@@ -12,11 +16,17 @@ export default class Application extends Component {
 
     render() {
         return (
-            <div>
+            <Router>
                 <Header user={this.user}/>
-                <Home/>
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/home" element={<Home/>}/>
+                    <Route path="/about" element={<About/>}/>
+                    <Route path="/about/:id" element={<About/>}/>
+                    <Route path="*" element={<NotFound/>}/>
+                </Routes>
                 <Footer user={this.user}/>
-            </div>
+            </Router>
         )
     }
 }

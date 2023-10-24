@@ -1,9 +1,14 @@
 import React from "react";
+import {NavLink, useNavigate} from "react-router-dom";
 
 let Header = ({user}) => {
     return (
-        <>
-        <h3>This is Header. User: {user.name}</h3>
+        <>  
+            Hi, <b>{user.name}</b>.
+            <div>
+            <NavLink to="/home" className="navBarLink">Home</NavLink>
+            <NavLink to="/about" className="navBarLink">About</NavLink>
+            </div>
         </>
     )
 }
