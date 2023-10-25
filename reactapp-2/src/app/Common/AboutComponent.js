@@ -9,7 +9,7 @@ let About = () => {
     
     let goToAboutBtn = (evt) => {
         goToAboutHook("/about/2023");
-        evt.preventDefault();  // prevents html default behavior - Event invoked in child propagating to parent
+        evt.preventDefault();  // prevents html default behavior - Event invoked in child propagating to parent (html container)
     }
 
     return (

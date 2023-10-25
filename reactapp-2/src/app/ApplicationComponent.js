@@ -11,7 +11,7 @@ import NotFound from "./Common/NotFoundPage";
 export default class Application extends Component {
     constructor(props) {
         super(props);
-        this.user = {name: "user1", age: 19}
+        this.user = {name: "me", age: 19}
     }
 
     render() {
@@ -19,8 +19,8 @@ export default class Application extends Component {
             <Router>
                 <Header user={this.user}/>
                 <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/home" element={<Home/>}/>
+                    <Route path="/" element={<Home user={this.user}/>}/>
+                    <Route path="/home" element={<Home user={this.user}/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/about/:id" element={<About/>}/>
                     <Route path="*" element={<NotFound/>}/>

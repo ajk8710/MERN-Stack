@@ -5,7 +5,7 @@ let Footer = (props) => {
 
     return (
         <>
-        <h3>This is Footer. User: {user.name}</h3>
+        <h3>This is Footer. User: {user.name} {user.age}</h3>
         </>
     )
 }
