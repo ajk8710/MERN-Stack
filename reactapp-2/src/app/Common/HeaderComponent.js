@@ -27,6 +27,7 @@ let Header = (props) => {
             Hi, <b>{userName} {userName2}</b>.
             <div>
             <NavLink to="/home" className="navBarLink">Home</NavLink>
+            <NavLink to="/user" className="navBarLink">User</NavLink>
             <NavLink to="/about" className="navBarLink">About</NavLink>
             </div>
             <input type="button" value="Update User" onClick={updateUserBtn}/>
