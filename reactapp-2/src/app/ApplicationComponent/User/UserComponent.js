@@ -38,7 +38,7 @@ export default class User extends Component {
     // => userActions.UpdateUserAction(User) => rootReducer finds which reducer contains given action 
     // => userReducer => userReducer finds appropriate switch case and updates states,
     // updated states propagated by mapStateToProps
-    loginUser = (evt) => {
+    loginUserUIOnly = (evt) => {
         this.props.updateUserOnUI(this.state);  // this.state is User on this component only
         evt.preventDefault();                   // Update User on Store using props.updateUserOnUI
 
@@ -47,6 +47,13 @@ export default class User extends Component {
         // that calls action on mapDispatchToProps.
         // let dispatchLoginUser = useDispatch();
         // dispatchSignInUser(UpdateUserAction(this.state));
+    }
+
+    loginUser = (evt) => {
+        // props.signInUpUser => saveUserToDB => calls API on server
+        // => get response back from server => UpdateUserAction to update on UI
+        this.props.signInUpUser(this.state);  
+        evt.preventDefault();                 
     }
 
     render() {
@@ -80,6 +87,12 @@ export default class User extends Component {
                         <input type="number" className="form-control col-md-6 mobile" value={this.state.mobile} 
                         placeholder="Mobile" maxLength="11"
                         onChange={this.onTextChange} />
+                    </div>
+
+                    <div className="col-md-12">
+                    <input type="button" className="btn btn-primary col-md-3 saveUserUIOnly"
+                            value="Update User on UI only"
+                            onClick={this.loginUserUIOnly}/>
                     </div>
 
                     <div className="col-md-12">
