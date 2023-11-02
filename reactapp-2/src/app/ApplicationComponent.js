@@ -9,6 +9,7 @@ import Footer from "./Common/FooterComponent";
 import NotFound from "./Common/NotFoundPage";
 
 import UserContainer from "./ApplicationComponent/User/UserContainer";
+import UserHook from "./ApplicationComponent/User/UserFuncComponent";
 
 export default class Application extends Component {
     constructor(props) {
@@ -27,6 +28,7 @@ export default class Application extends Component {
                     <Route path="/about/:id" element={<About/>}/>
                     <Route path="*" element={<NotFound/>}/>
                     <Route path="/user" element={<UserContainer/>}/>
+                    <Route path="/userhook" element={<UserHook/>}/>
                 </Routes>
                 <Footer user={this.user}/>
             </Router>
