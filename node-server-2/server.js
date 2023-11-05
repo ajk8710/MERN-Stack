@@ -8,10 +8,12 @@ app.use(cors());  // adding cors as middleware to top level of API so that cors 
 // json middle-ware for setting request content type to json in req.body
 app.use(express.json({limit:'2mb', extended:false}));
 
+
 // if someone gets to root path (/), send response 'Hello World'
 app.get('/', function (req, res) {  // req and res are conventional naming
   res.send('Hello World')
 })
+
 
 // userRouter
 const userApp = express();
@@ -19,6 +21,14 @@ const userRouter = require("./routes/userRouter");
 
 app.use('/user', userApp);  // use userApp for all url with /user
 userApp.use('/', userRouter);  // its job is defined in userRouter // localhost:9000/user/api/signinupuser
+
+// productRouter
+const productApp = express();
+const productRouter = require("./routes/productRouter");
+
+app.use('/product', productApp);  // use productApp for all url with /product
+productApp.use('/', productRouter);  // productApp's job is defined in productRouter // ex: localhost:9000/product/api/saveproduct
+
 
 app.listen(9000)  // localhost:9000/
 

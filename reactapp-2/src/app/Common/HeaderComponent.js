@@ -29,6 +29,7 @@ let Header = (props) => {
             <NavLink to="/home" className="navBarLink">Home</NavLink>
             <NavLink to="/user" className="navBarLink">User</NavLink>
             <NavLink to="/userhook" className="navBarLink">UserHook</NavLink>
+            <NavLink to="/product" className="navBarLink">Products</NavLink>
             <NavLink to="/about" className="navBarLink">About</NavLink>
             </div>
             <input type="button" value="Update User" onClick={updateUserBtn}/>

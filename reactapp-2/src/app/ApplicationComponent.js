@@ -10,6 +10,7 @@ import NotFound from "./Common/NotFoundPage";
 
 import UserContainer from "./ApplicationComponent/User/UserContainer";
 import UserHook from "./ApplicationComponent/User/UserFuncComponent";
+import Product from "./ApplicationComponent/Product/ProductComponent";
 
 export default class Application extends Component {
     constructor(props) {
@@ -29,6 +30,7 @@ export default class Application extends Component {
                     <Route path="*" element={<NotFound/>}/>
                     <Route path="/user" element={<UserContainer/>}/>
                     <Route path="/userhook" element={<UserHook/>}/>
+                    <Route path="/product" element={<Product/>}/>
                 </Routes>
                 <Footer user={this.user}/>
             </Router>
